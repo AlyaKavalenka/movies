@@ -11,7 +11,7 @@
     "lint:fix": "next lint --fix",
     "prettier:check": "prettier --check \"**/*.{ts,tsx}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\""
-    },
+  },
   "dependencies": {
     "@mantine/core": "^7.8.1",
     "@mantine/hooks": "^7.8.1",
@@ -37,10 +37,11 @@
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^6.2.0",
-    "postcss": "^8.4.35",
-    "postcss-preset-mantine": "1.15.0",
+    "postcss": "^8.4.38",
+    "postcss-preset-mantine": "^1.15.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.2.5",
+    "sass": "^1.75.0",
     "stylelint": "^16.2.1",
     "stylelint-config-standard-scss": "^13.0.0",
     "typescript": "^5"
