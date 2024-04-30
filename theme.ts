@@ -35,7 +35,7 @@ export const theme = createTheme({
       '#fccf67',
       '#fbc13b',
       '#fab720',
-      '#fab005',
+      '#fab005', //Main 7
       '#df9d00',
       '#c78b00',
       '#ac7700',

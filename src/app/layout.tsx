@@ -5,6 +5,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import Sidebar from '@/components/sidebar/sidebar';
 import { theme } from '../../theme';
 import '@mantine/core/styles.css';
+import StoreProvider from './StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,21 +20,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <ColorSchemeScript />
-        <link rel="shortcut icon" href="/favicon.svg" />
-        <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
-        />
-      </head>
-      <body className={inter.className}>
-        <MantineProvider theme={theme}>
-          <Sidebar />
-          {children}
-        </MantineProvider>
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <head>
+          <ColorSchemeScript />
+          <link rel="shortcut icon" href="/favicon.svg" />
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+          />
+        </head>
+        <body className={inter.className}>
+          <MantineProvider theme={theme}>
+            <Sidebar />
+            {children}
+          </MantineProvider>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

@@ -1,0 +1,17 @@
+.cardWStar {
+  display: flex;
+  gap: rem(8px);
+  height: 100%;
+
+  .cardInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__top {
+      display: flex;
+      flex-direction: column;
+      gap: rem(8px);
+    }
+  }
+}

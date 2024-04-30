@@ -3,6 +3,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: rem(40px) rem(90px);
   min-height: 100vh;
+
+  background-color: var(--mantine-color-gray-1);
 }
