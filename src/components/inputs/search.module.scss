@@ -1,0 +1,27 @@
+.searchTextInput {
+  font-size: rem(14px);
+
+  border-color: var(--mantine-color-gray-3);
+
+  &::placeholder {
+    color: var(--mantine-color-gray-5);
+  }
+
+  &:hover {
+    border-color: var(--mantine-color-purple-5);
+  }
+
+  &:focus {
+    border-color: var(--mantine-color-purple-5);
+  }
+}
+
+.btn {
+  &:hover {
+    background-color: var(--mantine-color-purple-4);
+  }
+
+  &:active {
+    background-color: var(--mantine-color-purple-6);
+  }
+}

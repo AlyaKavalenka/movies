@@ -1,8 +1,9 @@
 'use client';
 
-import { Grid } from '@mantine/core';
+import { Grid, GridCol, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
+import Search from '@/components/inputs/search';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -10,6 +11,16 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <Grid grow w="100%">
+        <GridCol span={1}>
+          <Title order={1} size={32}>
+            Movies
+          </Title>
+        </GridCol>
+        <GridCol span={1}>
+          <Search />
+        </GridCol>
+      </Grid>
       {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (
