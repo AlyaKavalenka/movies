@@ -1,9 +1,10 @@
 'use client';
 
-import { Grid, GridCol, Title } from '@mantine/core';
+import { Flex, Grid, GridCol, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
 import Search from '@/components/inputs/search';
+import Genres from '@/components/inputs/genres';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -21,17 +22,22 @@ export default function Home() {
           <Search />
         </GridCol>
       </Grid>
-      {error ? (
-        <>Oh no, there was an error</>
-      ) : isLoading ? (
-        <>Loading...</>
-      ) : (
-        <Grid columns={2} grow>
-          {data?.results.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
-        </Grid>
-      )}
+      <Stack>
+        <Flex>
+          <Genres />
+        </Flex>
+        {error ? (
+          <>Oh no, there was an error</>
+        ) : isLoading ? (
+          <>Loading...</>
+        ) : (
+          <Grid columns={2} grow>
+            {data?.results.map((movie) => (
+              <MovieCard movie={movie} key={movie.id} />
+            ))}
+          </Grid>
+        )}
+      </Stack>
     </main>
   );
 }
