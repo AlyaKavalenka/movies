@@ -8,10 +8,14 @@ import Genres from '@/components/inputs/genres';
 import ReleaseYear from '@/components/inputs/releaseYear';
 import Ratings from '@/components/inputs/ratings';
 import SortBy from '@/components/inputs/sortBy';
+import { useAppSelector } from '@/lib/hooks';
 import styles from './page.module.scss';
 
 export default function Home() {
-  const { data, error, isLoading } = useGetMoviesQuery(null);
+  const moviesFilters = useAppSelector((state) => state.moviesFiltersSlice);
+  const { data, error, isLoading } = useGetMoviesQuery({
+    sortBy: moviesFilters.sortBy,
+  });
 
   return (
     <main className={styles.main}>

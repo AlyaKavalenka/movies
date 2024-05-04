@@ -1,25 +1,36 @@
 import { Select } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ArrowSvg from '@/assets/arrow';
+import { useAppDispatch } from '@/lib/hooks';
+import { setSortBy } from '@/lib/reducers/moviesFiltersSlice';
+import { SortByType } from '@/types/interfaces';
 import styles from './select.module.scss';
 
 export default function SortBy() {
   const [arrowState, setArrowState] = useState<'up' | 'down'>('down');
-
-  const options = [
-    'Most popular',
-    'Least Popular',
-    'Most Rated',
-    'Least Rated',
-    'Most Voted',
-    'Least Voted',
+  const options: { value: SortByType; label: string }[] = [
+    { value: 'popularity.desc', label: 'Most Popular' },
+    { value: 'popularity.asc', label: 'Least Popular' },
+    { value: 'vote_average.desc', label: 'Most Rated' },
+    { value: 'vote_average.asc', label: 'Least Rated' },
+    { value: 'vote_count.desc', label: 'Most Voted' },
+    { value: 'vote_count.asc', label: 'Least Voted' },
   ];
+
+  const [value, setValue] = useState<string | null>(options[0].value);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setSortBy(value || 'popularity.desc'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <Select
       label="Sort by"
       data={options}
-      defaultValue={options[0]}
+      defaultValue={options[0].value}
       comboboxProps={{
         transitionProps: { transition: 'pop', duration: 200 },
       }}
@@ -41,6 +52,8 @@ export default function SortBy() {
       }
       onDropdownOpen={() => setArrowState('up')}
       onDropdownClose={() => setArrowState('down')}
+      onChange={setValue}
+      value={value}
     />
   );
 }

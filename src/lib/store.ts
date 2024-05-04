@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { api } from '@/lib/api/api';
+import moviesFiltersSlice from './reducers/moviesFiltersSlice';
 
 export const makeStore = () =>
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
+      moviesFiltersSlice,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),
