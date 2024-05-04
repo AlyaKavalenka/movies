@@ -1,6 +1,6 @@
 'use client';
 
-import { Flex, Grid, GridCol, Stack, Title } from '@mantine/core';
+import { Button, Flex, Grid, GridCol, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
 import Search from '@/components/inputs/search';
@@ -25,10 +25,11 @@ export default function Home() {
         </GridCol>
       </Grid>
       <Stack>
-        <Flex>
+        <Flex align="flex-end">
           <Genres />
           <ReleaseYear />
           <Ratings />
+          <Button>Reset filters</Button>
         </Flex>
         {error ? (
           <>Oh no, there was an error</>
