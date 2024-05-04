@@ -1,8 +1,7 @@
 import { useGetGenresQuery } from '@/lib/api/endpoints/genres';
-import { Image, Select } from '@mantine/core';
+import { MultiSelect } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import NextImage from 'next/image';
-import arrowSvg from '../../../public/images/svg/arrow.svg';
+import ArrowSvg from '@/assets/arrow';
 import styles from './genres.module.scss';
 
 export default function Genres() {
@@ -25,7 +24,7 @@ export default function Genres() {
   return (
     <>
       {data && (
-        <Select
+        <MultiSelect
           label="Genres"
           placeholder="Select genre"
           data={genres}
@@ -37,17 +36,19 @@ export default function Genres() {
             section: styles.genresSection,
           }}
           rightSection={
-            <Image
-              component={NextImage}
-              src={arrowSvg}
-              alt="arrow"
-              style={{
+            <ArrowSvg
+              color={
+                arrowState === 'up'
+                  ? 'var(--mantine-color-purple-5)'
+                  : 'var(--mantine-color-gray-5)'
+              }
+              styles={{
                 transform:
-                  arrowState === 'up' ? 'rotate(180deg)' : 'rotate(360deg)',
+                  arrowState === 'up' ? 'rotate(180deg)' : 'rotate(0deg)',
+                transitionDuration: '200ms',
               }}
             />
           }
-          clearable
           onDropdownOpen={() => setArrowState('up')}
           onDropdownClose={() => setArrowState('down')}
         />
