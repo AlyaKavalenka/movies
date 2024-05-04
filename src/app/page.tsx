@@ -6,6 +6,7 @@ import MovieCard from '@/components/movieCard/movieCard';
 import Search from '@/components/inputs/search';
 import Genres from '@/components/inputs/genres';
 import ReleaseYear from '@/components/inputs/releaseYear';
+import Ratings from '@/components/inputs/ratings';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
         <Flex>
           <Genres />
           <ReleaseYear />
+          <Ratings />
         </Flex>
         {error ? (
           <>Oh no, there was an error</>
