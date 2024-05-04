@@ -5,6 +5,7 @@ import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
 import Search from '@/components/inputs/search';
 import Genres from '@/components/inputs/genres';
+import ReleaseYear from '@/components/inputs/releaseYear';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
       <Stack>
         <Flex>
           <Genres />
+          <ReleaseYear />
         </Flex>
         {error ? (
           <>Oh no, there was an error</>

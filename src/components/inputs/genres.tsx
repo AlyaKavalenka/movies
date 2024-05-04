@@ -2,7 +2,7 @@ import { useGetGenresQuery } from '@/lib/api/endpoints/genres';
 import { MultiSelect } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import ArrowSvg from '@/assets/arrow';
-import styles from './genres.module.scss';
+import styles from './select.module.scss';
 
 export default function Genres() {
   const { data, isLoading, error } = useGetGenresQuery(null);
@@ -32,8 +32,7 @@ export default function Genres() {
             transitionProps: { transition: 'pop', duration: 200 },
           }}
           classNames={{
-            input: styles.genresInput,
-            section: styles.genresSection,
+            input: styles.selectInput,
           }}
           rightSection={
             <ArrowSvg
