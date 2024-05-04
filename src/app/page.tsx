@@ -1,14 +1,14 @@
 'use client';
 
-import { Button, Flex, Grid, GridCol, Select, Stack, Title } from '@mantine/core';
+import { Button, Flex, Grid, GridCol, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
 import Search from '@/components/inputs/search';
 import Genres from '@/components/inputs/genres';
 import ReleaseYear from '@/components/inputs/releaseYear';
 import Ratings from '@/components/inputs/ratings';
-import styles from './page.module.scss';
 import SortBy from '@/components/inputs/sortBy';
+import styles from './page.module.scss';
 
 export default function Home() {
   const { data, error, isLoading } = useGetMoviesQuery(null);
