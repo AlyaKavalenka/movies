@@ -1,9 +1,8 @@
 'use client';
 
-import { Button, Flex, Grid, GridCol, Stack, Title } from '@mantine/core';
+import { Button, Flex, Grid, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
-import Search from '@/components/inputs/search';
 import Genres from '@/components/inputs/genres';
 import ReleaseYear from '@/components/inputs/releaseYear';
 import Ratings from '@/components/inputs/ratings';
@@ -19,16 +18,9 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <Grid grow w="100%">
-        <GridCol span={1}>
-          <Title order={1} size={32}>
-            Movies
-          </Title>
-        </GridCol>
-        <GridCol span={1}>
-          <Search />
-        </GridCol>
-      </Grid>
+      <Title order={1} size={32}>
+        Movies
+      </Title>
       <Stack>
         <Flex align="flex-end">
           <Genres />
