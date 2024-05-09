@@ -2,6 +2,8 @@ import { useGetGenresQuery } from '@/lib/api/endpoints/genres';
 import { MultiSelect } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import ArrowSvg from '@/assets/arrow';
+import { setGenresFilter } from '@/lib/reducers/moviesFiltersSlice';
+import { useAppDispatch } from '@/lib/hooks';
 import styles from './select.module.scss';
 
 export default function Genres() {
@@ -9,6 +11,13 @@ export default function Genres() {
 
   const [genres, setGenres] = useState();
   const [arrowState, setArrowState] = useState<'up' | 'down'>('down');
+  const [value, setValue] = useState<string[] | undefined>(undefined);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setGenresFilter(value));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   useEffect(() => {
     if (data) {
@@ -50,6 +59,8 @@ export default function Genres() {
           }
           onDropdownOpen={() => setArrowState('up')}
           onDropdownClose={() => setArrowState('down')}
+          value={value}
+          onChange={setValue}
         />
       )}
     </>

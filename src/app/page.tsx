@@ -14,6 +14,7 @@ export default function Home() {
   const moviesFilters = useAppSelector((state) => state.moviesFiltersSlice);
   const { data, error, isLoading } = useGetMoviesQuery({
     sortBy: moviesFilters.sortBy,
+    with_genres: moviesFilters.genresFilter,
   });
 
   return (

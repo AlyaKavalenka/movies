@@ -6,8 +6,14 @@ const api_key = process.env.NEXT_PUBLIC_API_KEY;
 const movies = api.injectEndpoints({
   endpoints: (builder) => ({
     getMovies: builder.query({
-      query: ({ sortBy }: { sortBy?: string | null }) =>
-        `discover/movie?api_key=${api_key}&language=en&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}`,
+      query: ({
+        sortBy,
+        with_genres,
+      }: {
+        sortBy?: string | null;
+        with_genres: string | undefined;
+      }) =>
+        `discover/movie?api_key=${api_key}&language=en&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}`,
       transformResponse: (response: Movies) => {
         response.results.map((movie) => {
           if (movie.poster_path)
