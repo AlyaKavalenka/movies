@@ -15,7 +15,7 @@ const movies = api.injectEndpoints({
         with_genres: string | undefined;
         primary_release_year: number | null;
       }) =>
-        `discover/movie?api_key=${api_key}&language=en&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}${primary_release_year ? `&primary_release_year=${primary_release_year}` : ''}`,
+        `discover/movie?api_key=${api_key}&language=en-US&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}${primary_release_year ? `&primary_release_year=${primary_release_year}` : ''}`,
 
       transformResponse: (response: Movies) => {
         response.results.map((movie) => {
