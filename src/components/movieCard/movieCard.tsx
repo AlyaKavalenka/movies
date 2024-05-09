@@ -12,6 +12,7 @@ import { Movie } from '@/types/interfaces';
 import { useGetGenresQuery } from '@/lib/api/endpoints/genres';
 import StarIcon from '../../assets/star';
 import styles from './movieCard.module.scss';
+import NoPoster from '../noPoster/noPoster';
 
 interface MovieCardProps {
   movie: Movie;
@@ -40,20 +41,24 @@ export default function MovieCard(props: MovieCardProps) {
         ) : (
           <Grid gutter="md">
             <Grid.Col span="content">
-              <Image
-                component={NextImage}
-                src={poster_path}
-                alt="movie poster"
-                width={0}
-                height={0}
-                w="auto"
-                h="170"
-                loading="lazy"
-                priority={false}
-                placeholder="blur"
-                sizes="100vw"
-                blurDataURL={poster_path}
-              />
+              {poster_path ? (
+                <Image
+                  component={NextImage}
+                  src={poster_path}
+                  alt="movie poster"
+                  width={0}
+                  height={0}
+                  w="auto"
+                  h="170"
+                  loading="lazy"
+                  priority={false}
+                  placeholder="blur"
+                  sizes="100vw"
+                  blurDataURL={poster_path}
+                />
+              ) : (
+                <NoPoster />
+              )}
             </Grid.Col>
             <Grid.Col span="auto" py={0}>
               <section className={styles.cardWStar}>
@@ -62,9 +67,11 @@ export default function MovieCard(props: MovieCardProps) {
                     <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
                       {title}
                     </Title>
-                    <Text c="gray.6">
-                      {new Date(release_date).getFullYear()}
-                    </Text>
+                    {release_date.length > 0 && (
+                      <Text c="gray.6">
+                        {new Date(release_date).getFullYear()}
+                      </Text>
+                    )}
                     <Flex gap="8px" align="center" wrap="wrap">
                       <Flex gap="4px" align="center" wrap="wrap">
                         <StarIcon color="yellow" />
@@ -81,20 +88,22 @@ export default function MovieCard(props: MovieCardProps) {
                       </Text>
                     </Flex>
                   </div>
-                  <Text c="gray.6">
-                    Genres{' '}
-                    <Text c="black" span inherit>
-                      {genre_ids
-                        .map((genreId) => {
-                          const foundGenre = data.genres.find(
-                            (dataGenre: { id: number; name: string }) =>
-                              dataGenre.id === genreId,
-                          );
-                          return foundGenre.name;
-                        })
-                        .join(', ')}
+                  {genre_ids.length > 0 && (
+                    <Text c="gray.6">
+                      Genres{' '}
+                      <Text c="black" span inherit>
+                        {genre_ids
+                          .map((genreId) => {
+                            const foundGenre = data.genres.find(
+                              (dataGenre: { id: number; name: string }) =>
+                                dataGenre.id === genreId,
+                            );
+                            return foundGenre.name;
+                          })
+                          .join(', ')}
+                      </Text>
                     </Text>
-                  </Text>
+                  )}
                 </article>
                 <ActionIcon variant="transparent">
                   <StarIcon color="gray" />

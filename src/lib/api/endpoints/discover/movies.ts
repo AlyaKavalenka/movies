@@ -10,7 +10,8 @@ const movies = api.injectEndpoints({
         `discover/movie?api_key=${api_key}&language=en&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}`,
       transformResponse: (response: Movies) => {
         response.results.map((movie) => {
-          movie.poster_path = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+          if (movie.poster_path)
+            movie.poster_path = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
           return movie;
         });
         return response;
