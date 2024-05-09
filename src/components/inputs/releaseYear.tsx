@@ -1,16 +1,26 @@
 import getYearsRange from '@/utils/getYearsRange';
 import { Select } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ArrowSvg from '@/assets/arrow';
+import { useAppDispatch } from '@/lib/hooks';
+import { setReleaseYearFilter } from '@/lib/reducers/moviesFiltersSlice';
 import styles from './select.module.scss';
 
 export default function ReleaseYear() {
   const [arrowState, setArrowState] = useState<'up' | 'down'>('down');
+  const [value, setValue] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setReleaseYearFilter(value));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <Select
-      label="Genres"
-      placeholder="Select genre"
+      label="Release year"
+      placeholder="Select release year"
       data={getYearsRange({ from: 1824, to: new Date().getFullYear() }, 'new')}
       comboboxProps={{
         transitionProps: { transition: 'pop', duration: 200 },
@@ -34,6 +44,8 @@ export default function ReleaseYear() {
       }
       onDropdownOpen={() => setArrowState('up')}
       onDropdownClose={() => setArrowState('down')}
+      value={value}
+      onChange={setValue}
     />
   );
 }

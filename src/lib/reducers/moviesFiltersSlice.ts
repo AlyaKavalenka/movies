@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface InitialValues {
   sortBy: SortByType | string;
   genresFilter: string | undefined;
+  releaseYearFilter: number | null;
 }
 
 const moviesFiltersSlice = createSlice({
@@ -11,6 +12,7 @@ const moviesFiltersSlice = createSlice({
   initialState: <InitialValues>{
     sortBy: 'popularity.desc',
     genresFilter: undefined,
+    releaseYearFilter: null,
   },
   reducers: {
     setSortBy: (state, action: PayloadAction<SortByType | string>) => {
@@ -19,9 +21,13 @@ const moviesFiltersSlice = createSlice({
     setGenresFilter: (state, action: PayloadAction<string[] | undefined>) => {
       state.genresFilter = action.payload?.join(',');
     },
+    setReleaseYearFilter: (state, action) => {
+      state.releaseYearFilter = +action.payload;
+    },
   },
 });
 
-export const { setSortBy, setGenresFilter } = moviesFiltersSlice.actions;
+export const { setSortBy, setGenresFilter, setReleaseYearFilter } =
+  moviesFiltersSlice.actions;
 
 export default moviesFiltersSlice.reducer;

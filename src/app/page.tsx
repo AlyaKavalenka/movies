@@ -15,6 +15,7 @@ export default function Home() {
   const { data, error, isLoading } = useGetMoviesQuery({
     sortBy: moviesFilters.sortBy,
     with_genres: moviesFilters.genresFilter,
+    primary_release_year: moviesFilters.releaseYearFilter,
   });
 
   return (

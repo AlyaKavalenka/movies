@@ -9,11 +9,14 @@ const movies = api.injectEndpoints({
       query: ({
         sortBy,
         with_genres,
+        primary_release_year,
       }: {
         sortBy?: string | null;
         with_genres: string | undefined;
+        primary_release_year: number | null;
       }) =>
-        `discover/movie?api_key=${api_key}&language=en&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}`,
+        `discover/movie?api_key=${api_key}&language=en&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}${primary_release_year ? `&primary_release_year=${primary_release_year}` : ''}`,
+
       transformResponse: (response: Movies) => {
         response.results.map((movie) => {
           if (movie.poster_path)
@@ -22,6 +25,7 @@ const movies = api.injectEndpoints({
         });
         return response;
       },
+
       providesTags: (result: Movies | undefined) =>
         result
           ? [
