@@ -67,7 +67,7 @@ export default function MovieCard(props: MovieCardProps) {
                     <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
                       {title}
                     </Title>
-                    {release_date.length > 0 && (
+                    {release_date?.length > 0 && (
                       <Text c="gray.6">
                         {new Date(release_date).getFullYear()}
                       </Text>
@@ -88,7 +88,7 @@ export default function MovieCard(props: MovieCardProps) {
                       </Text>
                     </Flex>
                   </div>
-                  {genre_ids.length > 0 && (
+                  {genre_ids?.length > 0 && (
                     <Text c="gray.6">
                       Genres{' '}
                       <Text c="black" span inherit>

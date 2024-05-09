@@ -16,6 +16,7 @@ export default function Home() {
     sortBy: moviesFilters.sortBy,
     with_genres: moviesFilters.genresFilter,
     primary_release_year: moviesFilters.releaseYearFilter,
+    vote_average: moviesFilters.voteAverage,
   });
 
   return (

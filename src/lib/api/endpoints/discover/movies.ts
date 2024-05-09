@@ -10,12 +10,17 @@ const movies = api.injectEndpoints({
         sortBy,
         with_genres,
         primary_release_year,
+        vote_average,
       }: {
         sortBy?: string | null;
         with_genres: string | undefined;
         primary_release_year: number | null;
+        vote_average: {
+          gte: number | undefined;
+          lte: number | undefined;
+        };
       }) =>
-        `discover/movie?api_key=${api_key}&language=en-US&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}${primary_release_year ? `&primary_release_year=${primary_release_year}` : ''}`,
+        `discover/movie?api_key=${api_key}&language=en-US&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}${primary_release_year ? `&primary_release_year=${primary_release_year}` : ''}${vote_average.lte ? `&vote_average.lte=${vote_average.lte}` : ''}${vote_average.gte ? `&vote_average.gte=${vote_average.gte}` : ''}`,
 
       transformResponse: (response: Movies) => {
         response.results.map((movie) => {
