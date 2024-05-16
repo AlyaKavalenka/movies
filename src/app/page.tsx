@@ -1,15 +1,16 @@
 'use client';
 
-import { Flex, Grid, Stack, Title } from '@mantine/core';
+import { Flex, Grid, Group, Pagination, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
 import Genres from '@/components/inputs/genres';
 import ReleaseYear from '@/components/inputs/releaseYear';
 import Ratings from '@/components/inputs/ratings';
 import SortBy from '@/components/inputs/sortBy';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useForm } from '@mantine/form';
 import BtnWithoutBg from '@/components/btns/btnWithoutBg';
+import { setPage } from '@/lib/reducers/moviesFiltersSlice';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -31,7 +32,10 @@ export default function Home() {
     with_genres: moviesFilters.genresFilter,
     primary_release_year: moviesFilters.releaseYearFilter,
     vote_average: moviesFilters.voteAverage,
+    page: moviesFilters.page,
   });
+
+  const dispatch = useAppDispatch();
 
   return (
     <main className={styles.main}>
@@ -56,11 +60,19 @@ export default function Home() {
         ) : isLoading ? (
           <>Loading...</>
         ) : (
-          <Grid columns={2} grow>
-            {data?.results.map((movie) => (
-              <MovieCard movie={movie} key={movie.id} />
-            ))}
-          </Grid>
+          <Group justify="flex-end">
+            <Grid columns={2} grow>
+              {data?.results.map((movie) => (
+                <MovieCard movie={movie} key={movie.id} />
+              ))}
+            </Grid>
+            <Pagination
+              total={data?.total_pages || 1}
+              color="purple.5"
+              value={data?.page}
+              onChange={(value) => dispatch(setPage(value))}
+            />
+          </Group>
         )}
       </Stack>
     </main>
