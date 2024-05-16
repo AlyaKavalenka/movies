@@ -27,6 +27,7 @@ export default function ReleaseYear() {
       }}
       classNames={{
         input: styles.selectInput,
+        option: styles.option,
       }}
       searchable
       rightSection={
@@ -46,6 +47,8 @@ export default function ReleaseYear() {
       onDropdownClose={() => setArrowState('down')}
       onChange={setValue}
       maw={284}
+      miw={161}
+      flex="1 0 0"
     />
   );
 }

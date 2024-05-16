@@ -70,6 +70,7 @@ export default function Genres() {
           onChange={setValue}
           maw={284}
           miw={206}
+          flex="1 0 0"
         />
       )}
     </>
