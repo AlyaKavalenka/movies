@@ -42,7 +42,15 @@ export default function Genres() {
           }}
           classNames={{
             input: styles.selectInput,
+            pill: styles.pill,
+            option: styles.option,
           }}
+          styles={{
+            inputField: {
+              display: value?.length ? 'none' : 'block',
+            },
+          }}
+          withCheckIcon={false}
           rightSection={
             <ArrowSvg
               color={
@@ -61,6 +69,7 @@ export default function Genres() {
           onDropdownClose={() => setArrowState('down')}
           onChange={setValue}
           maw={284}
+          miw={206}
         />
       )}
     </>

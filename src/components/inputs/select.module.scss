@@ -5,3 +5,41 @@
     border-color: var(--mantine-color-purple-5);
   }
 }
+
+.pill {  
+  padding: 0;
+
+  // /* Text base S/Subtitle S */
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  font-feature-settings: 'clig' off, 'liga' off;
+
+  background: transparent;
+
+  ::after {
+    content: ',';
+  }
+
+  &:last-of-type {
+    ::after {
+      content: '';
+    }
+  }
+
+  button {
+    display: none;
+  }
+}
+
+.option {
+  border-radius: 8px;
+
+  &:hover {
+    color: var(--mantine-color-white);
+    
+    background: var(--mantine-color-purple-5, #9854F6);
+  }
+}
