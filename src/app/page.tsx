@@ -38,7 +38,7 @@ export default function Home() {
         Movies
       </Title>
       <Stack>
-        <Flex align="flex-end">
+        <Flex align="flex-end" gap={16} wrap="wrap">
           <Genres key={form.key('genres')} />
           <ReleaseYear key={form.key('releaseYear')} />
           <Ratings key={form.key('voteAverage')} />

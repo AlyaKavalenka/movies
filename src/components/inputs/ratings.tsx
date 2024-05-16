@@ -19,12 +19,13 @@ export default function Ratings() {
   }, [ratings]);
 
   return (
-    <Flex align="flex-end">
+    <Flex align="flex-end" gap={8} flex="1 0 0">
       <NumberInput
         label="Ratings"
         placeholder="From"
         onChange={(e) => setRatings({ ...ratings, gte: e })}
         max={ratings.lte ? +ratings.lte : 10}
+        miw={85}
       />
       <NumberInput
         aria-label="Ratings"
@@ -32,6 +33,7 @@ export default function Ratings() {
         onChange={(e) => setRatings({ ...ratings, lte: e })}
         min={ratings.gte ? +ratings.gte : undefined}
         max={10}
+        miw={85}
       />
     </Flex>
   );
