@@ -23,14 +23,12 @@ export default function Ratings() {
       <NumberInput
         label="Ratings"
         placeholder="From"
-        value={ratings.gte}
         onChange={(e) => setRatings({ ...ratings, gte: e })}
-        max={ratings.lte ? +ratings.lte : undefined}
+        max={ratings.lte ? +ratings.lte : 10}
       />
       <NumberInput
         aria-label="Ratings"
         placeholder="To"
-        value={ratings.lte}
         onChange={(e) => setRatings({ ...ratings, lte: e })}
         min={ratings.gte ? +ratings.gte : undefined}
         max={10}

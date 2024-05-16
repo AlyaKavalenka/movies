@@ -59,7 +59,6 @@ export default function Genres() {
           }
           onDropdownOpen={() => setArrowState('up')}
           onDropdownClose={() => setArrowState('down')}
-          value={value}
           onChange={setValue}
         />
       )}

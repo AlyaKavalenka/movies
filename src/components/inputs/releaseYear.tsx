@@ -44,7 +44,6 @@ export default function ReleaseYear() {
       }
       onDropdownOpen={() => setArrowState('up')}
       onDropdownClose={() => setArrowState('down')}
-      value={value}
       onChange={setValue}
     />
   );
