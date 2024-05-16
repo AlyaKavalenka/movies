@@ -2,6 +2,7 @@ import { useAppDispatch } from '@/lib/hooks';
 import { setVoteAverage } from '@/lib/reducers/moviesFiltersSlice';
 import { Flex, NumberInput } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import styles from './inputNumber.module.scss';
 
 export default function Ratings() {
   const [ratings, setRatings] = useState<{
@@ -24,16 +25,25 @@ export default function Ratings() {
         label="Ratings"
         placeholder="From"
         onChange={(e) => setRatings({ ...ratings, gte: e })}
+        min={0}
         max={ratings.lte ? +ratings.lte : 10}
         miw={85}
+        classNames={{
+          controls: styles.controls,
+          input: styles.input,
+        }}
       />
       <NumberInput
         aria-label="Ratings"
         placeholder="To"
         onChange={(e) => setRatings({ ...ratings, lte: e })}
-        min={ratings.gte ? +ratings.gte : undefined}
+        min={ratings.gte ? +ratings.gte : 0}
         max={10}
         miw={85}
+        classNames={{
+          controls: styles.controls,
+          input: styles.input,
+        }}
       />
     </Flex>
   );

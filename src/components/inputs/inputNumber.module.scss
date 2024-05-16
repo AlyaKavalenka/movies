@@ -1,0 +1,13 @@
+.controls {
+  --input-bd: transparent;
+}
+
+.input {
+  caret-color: var(--mantine-color-purple-5);
+
+  &:hover,
+  &:focus,
+  &:focus-within {
+    border-color: var(--mantine-color-purple-5);
+  }
+}
