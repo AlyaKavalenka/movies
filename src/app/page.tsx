@@ -8,9 +8,22 @@ import ReleaseYear from '@/components/inputs/releaseYear';
 import Ratings from '@/components/inputs/ratings';
 import SortBy from '@/components/inputs/sortBy';
 import { useAppSelector } from '@/lib/hooks';
+import { useForm } from '@mantine/form';
 import styles from './page.module.scss';
 
 export default function Home() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      genres: undefined,
+      releaseYear: null,
+      voteAverage: {
+        gte: undefined,
+        lte: undefined,
+      },
+    },
+  });
+
   const moviesFilters = useAppSelector((state) => state.moviesFiltersSlice);
   const { data, error, isLoading } = useGetMoviesQuery({
     sortBy: moviesFilters.sortBy,
@@ -26,10 +39,10 @@ export default function Home() {
       </Title>
       <Stack>
         <Flex align="flex-end">
-          <Genres />
-          <ReleaseYear />
-          <Ratings />
-          <Button>Reset filters</Button>
+          <Genres key={form.key('genres')} />
+          <ReleaseYear key={form.key('releaseYear')} />
+          <Ratings key={form.key('voteAverage')} />
+          <Button onClick={() => form.reset()}>Reset filters</Button>
         </Flex>
         <Flex justify="flex-end">
           <SortBy />
