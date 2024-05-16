@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import Sidebar from '@/components/sidebar/sidebar';
 import { theme } from '../../theme';
 import '@mantine/core/styles.css';
 import StoreProvider from './StoreProvider';
@@ -31,10 +30,7 @@ export default function RootLayout({
           />
         </head>
         <body className={inter.className}>
-          <MantineProvider theme={theme}>
-            <Sidebar />
-            {children}
-          </MantineProvider>
+          <MantineProvider theme={theme}>{children}</MantineProvider>
         </body>
       </html>
     </StoreProvider>

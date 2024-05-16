@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useForm } from '@mantine/form';
 import BtnWithoutBg from '@/components/btns/btnWithoutBg';
 import { setPage } from '@/lib/reducers/moviesFiltersSlice';
+import Sidebar from '@/components/sidebar/sidebar';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -38,43 +39,46 @@ export default function Home() {
   const dispatch = useAppDispatch();
 
   return (
-    <main className={styles.main}>
-      <Title order={1} size={32}>
-        Movies
-      </Title>
-      <Stack>
-        <Flex align="flex-end" gap={16} wrap="wrap">
-          <Genres key={form.key('genres')} />
-          <ReleaseYear key={form.key('releaseYear')} />
-          <Ratings key={form.key('voteAverage')} />
-          <BtnWithoutBg
-            handleClick={() => form.reset()}
-            label="Reset filters"
-          />
-        </Flex>
-        <Flex justify="flex-end">
-          <SortBy />
-        </Flex>
-        {error ? (
-          <>Oh no, there was an error</>
-        ) : isLoading ? (
-          <>Loading...</>
-        ) : (
-          <Group justify="flex-end">
-            <Grid columns={2} grow>
-              {data?.results.map((movie) => (
-                <MovieCard movie={movie} key={movie.id} />
-              ))}
-            </Grid>
-            <Pagination
-              total={data?.total_pages || 1}
-              color="purple.5"
-              value={data?.page}
-              onChange={(value) => dispatch(setPage(value))}
+    <>
+      <Sidebar />
+      <main className={styles.main}>
+        <Title order={1} size={32}>
+          Movies
+        </Title>
+        <Stack>
+          <Flex align="flex-end" gap={16} wrap="wrap">
+            <Genres key={form.key('genres')} />
+            <ReleaseYear key={form.key('releaseYear')} />
+            <Ratings key={form.key('voteAverage')} />
+            <BtnWithoutBg
+              handleClick={() => form.reset()}
+              label="Reset filters"
             />
-          </Group>
-        )}
-      </Stack>
-    </main>
+          </Flex>
+          <Flex justify="flex-end">
+            <SortBy />
+          </Flex>
+          {error ? (
+            <>Oh no, there was an error</>
+          ) : isLoading ? (
+            <>Loading...</>
+          ) : (
+            <Group justify="flex-end">
+              <Grid columns={2} grow>
+                {data?.results.map((movie) => (
+                  <MovieCard movie={movie} key={movie.id} />
+                ))}
+              </Grid>
+              <Pagination
+                total={data?.total_pages || 1}
+                color="purple.5"
+                value={data?.page}
+                onChange={(value) => dispatch(setPage(value))}
+              />
+            </Group>
+          )}
+        </Stack>
+      </main>
+    </>
   );
 }
