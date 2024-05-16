@@ -1,0 +1,17 @@
+.btnWithoutBgRoot {
+  padding: 0;
+
+  color: var(--mantine-color-gray-6, #7B7C88);
+  font-size: rem(14px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: rem(20px);
+
+  &:hover {
+    color: var(--mantine-color-purple-4, #BD93F7);
+  }
+
+  &:active {
+    color: var(--mantine-color-purple-6, #541F9D);
+  }
+}

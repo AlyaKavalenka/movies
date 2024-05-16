@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Flex, Grid, Stack, Title } from '@mantine/core';
+import { Flex, Grid, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
 import Genres from '@/components/inputs/genres';
@@ -9,6 +9,7 @@ import Ratings from '@/components/inputs/ratings';
 import SortBy from '@/components/inputs/sortBy';
 import { useAppSelector } from '@/lib/hooks';
 import { useForm } from '@mantine/form';
+import BtnWithoutBg from '@/components/btns/btnWithoutBg';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -42,7 +43,10 @@ export default function Home() {
           <Genres key={form.key('genres')} />
           <ReleaseYear key={form.key('releaseYear')} />
           <Ratings key={form.key('voteAverage')} />
-          <Button onClick={() => form.reset()}>Reset filters</Button>
+          <BtnWithoutBg
+            handleClick={() => form.reset()}
+            label="Reset filters"
+          />
         </Flex>
         <Flex justify="flex-end">
           <SortBy />
