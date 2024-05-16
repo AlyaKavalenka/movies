@@ -38,8 +38,12 @@
   border-radius: 8px;
 
   &:hover {
+    background: var(--mantine-color-purple-1, #F2EBF9);
+  }
+
+  &:active {
     color: var(--mantine-color-white);
-    
+
     background: var(--mantine-color-purple-5, #9854F6);
   }
 }
