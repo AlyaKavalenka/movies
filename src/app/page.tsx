@@ -67,7 +67,7 @@ export default function Home() {
               <Grid columns={2} grow>
                 {data?.results.map((movie) => (
                   <Grid.Col span={1} key={movie.id}>
-                    <MovieCard movie={movie} />
+                    <MovieCard movie={movie} imageMaxWidth={119} />
                   </Grid.Col>
                 ))}
               </Grid>

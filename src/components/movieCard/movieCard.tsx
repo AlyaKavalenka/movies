@@ -18,10 +18,11 @@ import MovieCardGenres from './movieCardGenres';
 
 interface MovieCardProps {
   movie: Movie;
+  imageMaxWidth: number;
 }
 
 export default function MovieCard(props: MovieCardProps) {
-  const { movie } = props;
+  const { movie, imageMaxWidth } = props;
   const {
     title,
     poster_path,
@@ -65,7 +66,8 @@ export default function MovieCard(props: MovieCardProps) {
                 width={0}
                 height={0}
                 w="auto"
-                h="170"
+                h="auto"
+                maw={imageMaxWidth}
                 loading="lazy"
                 priority={false}
                 placeholder="blur"

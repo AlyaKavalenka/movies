@@ -33,7 +33,7 @@ export default function MoviePage({
         ) : (
           <Stack>
             <Breadcrumbs>{breadcrumbsItems}</Breadcrumbs>
-            {data ? <MovieCard movie={data} /> : ''}
+            {data ? <MovieCard movie={data} imageMaxWidth={250} /> : ''}
           </Stack>
         )}
       </main>
