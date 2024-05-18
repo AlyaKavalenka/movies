@@ -84,29 +84,36 @@ export default function MovieCard(props: MovieCardProps) {
           <Grid.Col span="auto" py={0}>
             <section className={styles.cardWStar}>
               <article className={styles.cardInfo}>
-                <div className={styles.cardInfo__top}>
-                  <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
-                    {title}
-                  </Title>
-                  {release_date?.length > 0 && (
-                    <Text c="gray.6">
-                      {new Date(release_date).getFullYear()}
-                    </Text>
-                  )}
-                  <Flex gap="8px" align="center" wrap="wrap">
-                    <Flex gap="4px" align="center" wrap="wrap">
-                      <StarIcon color="yellow" />
-                      <Text fw="600">{Math.round(vote_average * 10) / 10}</Text>
+                <Flex justify="space-between">
+                  <div className={styles.cardInfo__top}>
+                    <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
+                      {title}
+                    </Title>
+                    {release_date?.length > 0 && (
+                      <Text c="gray.6">
+                        {new Date(release_date).getFullYear()}
+                      </Text>
+                    )}
+                    <Flex gap="8px" align="center" wrap="wrap">
+                      <Flex gap="4px" align="center" wrap="wrap">
+                        <StarIcon color="yellow" />
+                        <Text fw="600">
+                          {Math.round(vote_average * 10) / 10}
+                        </Text>
+                      </Flex>
+                      <Text c="gray.6">
+                        (
+                        {vote_count > 999
+                          ? `${Math.round((vote_count * 10) / 1000) / 10}M`
+                          : vote_count}
+                        )
+                      </Text>
                     </Flex>
-                    <Text c="gray.6">
-                      (
-                      {vote_count > 999
-                        ? `${Math.round((vote_count * 10) / 1000) / 10}M`
-                        : vote_count}
-                      )
-                    </Text>
-                  </Flex>
-                </div>
+                  </div>
+                  <ActionIcon variant="transparent">
+                    <StarIcon color="gray" />
+                  </ActionIcon>
+                </Flex>
                 <MovieCardTable
                   runtime={runtime}
                   release_date={release_date}
@@ -115,9 +122,6 @@ export default function MovieCard(props: MovieCardProps) {
                   genres={genresTitles}
                 />
               </article>
-              <ActionIcon variant="transparent">
-                <StarIcon color="gray" />
-              </ActionIcon>
             </section>
           </Grid.Col>
         </Grid>
