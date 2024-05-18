@@ -1,11 +1,6 @@
 .main {
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   padding: rem(40px) rem(90px);
-  min-height: 100vh;
   gap: rem(40px);
-
-  background-color: var(--mantine-color-gray-1);
 }

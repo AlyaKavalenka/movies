@@ -1,4 +1,4 @@
-import { Movies } from '@/types/interfaces';
+import { Movie, Movies } from '@/types/interfaces';
 import { api } from '../../api';
 
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
@@ -44,8 +44,17 @@ const movies = api.injectEndpoints({
             ]
           : [{ type: 'Movies', id: 'LIST' }],
     }),
+    getMovie: builder.query({
+      query: ({ id }: { id: number }) =>
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}&language=en-US`,
+      transformResponse: (response: Movie) => ({
+        ...response,
+        poster_path: `https://image.tmdb.org/t/p/original${response.poster_path}`,
+      }),
+      // TODO: add provided tags
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetMoviesQuery } = movies;
+export const { useGetMoviesQuery, useGetMovieQuery } = movies;

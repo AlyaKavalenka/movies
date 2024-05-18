@@ -66,7 +66,9 @@ export default function Home() {
             <Group justify="flex-end">
               <Grid columns={2} grow>
                 {data?.results.map((movie) => (
-                  <MovieCard movie={movie} key={movie.id} />
+                  <Grid.Col span={1} key={movie.id}>
+                    <MovieCard movie={movie} />
+                  </Grid.Col>
                 ))}
               </Grid>
               <Pagination
