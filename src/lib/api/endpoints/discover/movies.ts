@@ -46,10 +46,15 @@ const movies = api.injectEndpoints({
     }),
     getMovie: builder.query({
       query: ({ id }: { id: number }) =>
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}&language=en-US`,
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=videos`,
       transformResponse: (response: Movie) => ({
         ...response,
         poster_path: `https://image.tmdb.org/t/p/original${response.poster_path}`,
+        production_companies: response.production_companies?.map((company) => {
+          if (company.logo_path)
+            company.logo_path = `https://image.tmdb.org/t/p/original${company.logo_path}`;
+          return company;
+        }),
       }),
       // TODO: add provided tags
     }),

@@ -4,6 +4,7 @@ import MovieCard from '@/components/movieCard/movieCard';
 import Sidebar from '@/components/sidebar/sidebar';
 import { useGetMovieQuery } from '@/lib/api/endpoints/discover/movies';
 import { Anchor, Breadcrumbs, Stack } from '@mantine/core';
+import MovieCardDescription from '@/components/movieCard/movieCardDesciption';
 import styles from './moviePage.module.scss';
 
 export default function MoviePage({
@@ -34,6 +35,11 @@ export default function MoviePage({
           <Stack>
             <Breadcrumbs>{breadcrumbsItems}</Breadcrumbs>
             {data ? <MovieCard movie={data} imageMaxWidth={250} /> : ''}
+            <MovieCardDescription
+              video={data?.videos.results[0]}
+              overview={data?.overview}
+              productionCompanies={data?.production_companies}
+            />
           </Stack>
         )}
       </main>
