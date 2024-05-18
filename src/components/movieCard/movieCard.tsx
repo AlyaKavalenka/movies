@@ -14,7 +14,7 @@ import Link from 'next/link';
 import StarIcon from '../../assets/star';
 import styles from './movieCard.module.scss';
 import NoPoster from '../noPoster/noPoster';
-import MovieCardGenres from './movieCardGenres';
+import MovieCardTable from './movieCardTable';
 
 interface MovieCardProps {
   movie: Movie;
@@ -32,6 +32,9 @@ export default function MovieCard(props: MovieCardProps) {
     id,
     genre_ids,
     genres,
+    runtime,
+    budget,
+    revenue,
   } = movie;
 
   const { data, isLoading, error } = useGetGenresQuery(null);
@@ -104,7 +107,13 @@ export default function MovieCard(props: MovieCardProps) {
                     </Text>
                   </Flex>
                 </div>
-                <MovieCardGenres genres={genresTitles} />
+                <MovieCardTable
+                  runtime={runtime}
+                  release_date={release_date}
+                  budget={budget}
+                  revenue={revenue}
+                  genres={genresTitles}
+                />
               </article>
               <ActionIcon variant="transparent">
                 <StarIcon color="gray" />
