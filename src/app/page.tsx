@@ -10,7 +10,7 @@ import SortBy from '@/components/inputs/sortBy';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/storeHooks';
 import { useForm } from '@mantine/form';
 import BtnWithoutBg from '@/components/btns/btnWithoutBg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { setPage } from '@/lib/reducers/moviesFiltersSlice';
 import Sidebar from '@/components/sidebar/sidebar';
 import RatingModal from '@/components/modal/ratingModal';
@@ -45,6 +45,21 @@ export default function Home() {
   const { toggle } = useModal();
   const [clickedMovie, setClickedMovie] = useState<Movie>();
 
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    const { genresFilter, releaseYearFilter, voteAverage } = moviesFilters;
+
+    setIsDisabled(
+      !(
+        genresFilter ||
+        releaseYearFilter ||
+        voteAverage.gte ||
+        voteAverage.lte
+      ),
+    );
+  }, [moviesFilters]);
+
   return (
     <Flex>
       <Sidebar />
@@ -60,6 +75,7 @@ export default function Home() {
             <BtnWithoutBg
               handleClick={() => form.reset()}
               label="Reset filters"
+              isDisabled={isDisabled}
             />
           </Flex>
           <Flex justify="flex-end">

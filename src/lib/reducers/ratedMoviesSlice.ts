@@ -52,9 +52,11 @@ const ratedMoviesSlice = createSlice({
         (movie) => movie.id === action.payload.id,
       );
 
-      if (foundIndex !== -1) state.movies.splice(foundIndex, 1);
+      if (foundIndex !== -1) {
+        state.movies.splice(foundIndex, 1);
 
-      saveInLocalStorage(state.movies);
+        saveInLocalStorage(state.movies);
+      }
     },
   },
 });

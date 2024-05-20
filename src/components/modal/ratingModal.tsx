@@ -2,7 +2,10 @@ import { ModalProps } from '@/types/interfaces';
 import { Flex, Modal, Rating, Stack, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/storeHooks';
-import { addRatedMovie } from '@/lib/reducers/ratedMoviesSlice';
+import {
+  addRatedMovie,
+  removeRatedMovie,
+} from '@/lib/reducers/ratedMoviesSlice';
 import BtnWithoutBg from '../btns/btnWithoutBg';
 import styles from './modal.module.scss';
 import BtnPrimaryM from '../btns/btnPrimaryM';
@@ -57,7 +60,14 @@ export default function RatingModal(props: ModalProps) {
               toggle();
             }}
           />
-          <BtnWithoutBg label="Remove rating" handleClick={() => {}} />
+          <BtnWithoutBg
+            label="Remove rating"
+            handleClick={() => {
+              dispatch(removeRatedMovie(movie));
+              toggle();
+            }}
+            isDisabled={rate === 0}
+          />
         </Flex>
       </Stack>
     </Modal>
