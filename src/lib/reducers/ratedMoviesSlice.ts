@@ -1,4 +1,4 @@
-import { Genre } from '@/types/interfaces';
+import { Genre, Movie } from '@/types/interfaces';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface InitialValues {
@@ -14,10 +14,19 @@ interface InitialValues {
   }[];
 }
 
+function getFromLocalStorage() {
+  const movies = localStorage.getItem('ratedMovies');
+  return movies ? JSON.parse(movies) : undefined;
+}
+
+function saveInLocalStorage(movies: Movie[]) {
+  localStorage.setItem('ratedMovies', JSON.stringify(movies));
+}
+
 const ratedMoviesSlice = createSlice({
   name: 'ratedMoviesSlice',
   initialState: <InitialValues>{
-    movies: [],
+    movies: getFromLocalStorage() || [],
   },
   reducers: {
     addRatedMovie: (state, action) => {
@@ -30,10 +39,21 @@ const ratedMoviesSlice = createSlice({
       } else {
         state.movies.splice(foundIndex, 1, action.payload);
       }
+
+      saveInLocalStorage(state.movies);
+    },
+    removeRatedMovie: (state, action) => {
+      const foundIndex = state.movies.findIndex(
+        (movie) => movie.id === action.payload.id,
+      );
+
+      if (foundIndex !== -1) state.movies.splice(foundIndex, 1);
+
+      saveInLocalStorage(state.movies);
     },
   },
 });
 
-export const { addRatedMovie } = ratedMoviesSlice.actions;
+export const { addRatedMovie, removeRatedMovie } = ratedMoviesSlice.actions;
 
 export default ratedMoviesSlice.reducer;
