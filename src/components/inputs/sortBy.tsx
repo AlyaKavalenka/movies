@@ -1,7 +1,7 @@
 import { Select } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import ArrowSvg from '@/assets/arrow';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/lib/hooks/storeHooks';
 import { setSortBy } from '@/lib/reducers/moviesFiltersSlice';
 import { SortByType } from '@/types/interfaces';
 import styles from './select.module.scss';

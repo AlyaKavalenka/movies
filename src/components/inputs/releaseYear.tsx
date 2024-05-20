@@ -2,7 +2,7 @@ import getYearsRange from '@/utils/getYearsRange';
 import { Select } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import ArrowSvg from '@/assets/arrow';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/lib/hooks/storeHooks';
 import { setReleaseYearFilter } from '@/lib/reducers/moviesFiltersSlice';
 import styles from './select.module.scss';
 

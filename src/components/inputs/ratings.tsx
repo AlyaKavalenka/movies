@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/lib/hooks/storeHooks';
 import { setVoteAverage } from '@/lib/reducers/moviesFiltersSlice';
 import { Flex, NumberInput } from '@mantine/core';
 import { useEffect, useState } from 'react';

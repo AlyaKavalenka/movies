@@ -3,7 +3,7 @@ import { MultiSelect } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import ArrowSvg from '@/assets/arrow';
 import { setGenresFilter } from '@/lib/reducers/moviesFiltersSlice';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/lib/hooks/storeHooks';
 import styles from './select.module.scss';
 
 export default function Genres() {

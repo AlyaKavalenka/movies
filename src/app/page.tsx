@@ -7,7 +7,7 @@ import Genres from '@/components/inputs/genres';
 import ReleaseYear from '@/components/inputs/releaseYear';
 import Ratings from '@/components/inputs/ratings';
 import SortBy from '@/components/inputs/sortBy';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks/storeHooks';
 import { useForm } from '@mantine/form';
 import BtnWithoutBg from '@/components/btns/btnWithoutBg';
 import { setPage } from '@/lib/reducers/moviesFiltersSlice';
