@@ -39,7 +39,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
 
   return (
-    <>
+    <Flex>
       <Sidebar />
       <main className={styles.main}>
         <Title order={1} size={32}>
@@ -81,6 +81,6 @@ export default function Home() {
           )}
         </Stack>
       </main>
-    </>
+    </Flex>
   );
 }

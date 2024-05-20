@@ -86,3 +86,10 @@ export type SortByType =
   | 'vote_average.asc'
   | 'vote_count.desc'
   | 'vote_count.asc';
+
+export interface ModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  movieTitle?: string;
+  ratingDefaultValue?: number;
+}

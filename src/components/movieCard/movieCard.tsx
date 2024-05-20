@@ -11,6 +11,7 @@ import NextImage from 'next/image';
 import { Movie } from '@/types/interfaces';
 import { useGetGenresQuery } from '@/lib/api/endpoints/genres';
 import Link from 'next/link';
+import useModal from '@/lib/hooks/useModal';
 import StarIcon from '../../assets/star';
 import styles from './movieCard.module.scss';
 import NoPoster from '../noPoster/noPoster';
@@ -51,6 +52,8 @@ export default function MovieCard(props: MovieCardProps) {
   } else if (genres) {
     genresTitles = genres.map((genre) => genre.name);
   }
+
+  const { toggle } = useModal();
 
   return (
     <Paper p="24px" radius="12px" component={Link} href={`/${id}`}>
@@ -110,7 +113,7 @@ export default function MovieCard(props: MovieCardProps) {
                       </Text>
                     </Flex>
                   </div>
-                  <ActionIcon variant="transparent">
+                  <ActionIcon variant="transparent" onClick={() => toggle()}>
                     <StarIcon color="gray" />
                   </ActionIcon>
                 </Flex>

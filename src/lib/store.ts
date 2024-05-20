@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { api } from '@/lib/api/api';
 import moviesFiltersSlice from './reducers/moviesFiltersSlice';
+import isOpenModalSlice from './reducers/isOpenModalSlice';
 
 export const makeStore = () =>
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
       moviesFiltersSlice,
+      isOpenModalSlice,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),

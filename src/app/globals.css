@@ -11,10 +11,6 @@ body {
   overflow-x: hidden;
 }
 
-body {
-  display: flex;
-}
-
 a {
   color: inherit;
   text-decoration: none;

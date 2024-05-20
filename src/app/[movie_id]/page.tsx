@@ -3,8 +3,11 @@
 import MovieCard from '@/components/movieCard/movieCard';
 import Sidebar from '@/components/sidebar/sidebar';
 import { useGetMovieQuery } from '@/lib/api/endpoints/discover/movies';
-import { Anchor, Breadcrumbs, Stack } from '@mantine/core';
+import { Anchor, Breadcrumbs, Flex, Stack } from '@mantine/core';
 import MovieCardDescription from '@/components/movieCard/movieCardDesciption';
+import { useAppSelector } from '@/lib/hooks/storeHooks';
+import useModal from '@/lib/hooks/useModal';
+import RatingModal from '@/components/modal/ratingModal';
 import styles from './moviePage.module.scss';
 
 export default function MoviePage({
@@ -23,8 +26,12 @@ export default function MoviePage({
     </Anchor>
   ));
 
+  const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
+
+  const { toggle } = useModal();
+
   return (
-    <>
+    <Flex>
       <Sidebar />
       <main className={styles.main}>
         {error ? (
@@ -43,6 +50,11 @@ export default function MoviePage({
           </Stack>
         )}
       </main>
-    </>
+      <RatingModal
+        isOpen={isOpen}
+        toggle={toggle}
+        movieTitle={data?.title}
+      ></RatingModal>
+    </Flex>
   );
 }
