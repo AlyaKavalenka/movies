@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { api } from '@/lib/api/api';
 import moviesFiltersSlice from './reducers/moviesFiltersSlice';
 import isOpenModalSlice from './reducers/isOpenModalSlice';
+import ratedMoviesSlice from './reducers/ratedMoviesSlice';
 
 export const makeStore = () =>
   configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () =>
       [api.reducerPath]: api.reducer,
       moviesFiltersSlice,
       isOpenModalSlice,
+      ratedMoviesSlice,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),
