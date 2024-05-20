@@ -15,12 +15,17 @@ interface InitialValues {
 }
 
 function getFromLocalStorage() {
-  const movies = localStorage.getItem('ratedMovies');
-  return movies ? JSON.parse(movies) : undefined;
+  if (typeof window !== 'undefined') {
+    const movies = localStorage.getItem('ratedMovies');
+    return movies ? JSON.parse(movies) : undefined;
+  }
+  return undefined;
 }
 
 function saveInLocalStorage(movies: Movie[]) {
-  localStorage.setItem('ratedMovies', JSON.stringify(movies));
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('ratedMovies', JSON.stringify(movies));
+  }
 }
 
 const ratedMoviesSlice = createSlice({
