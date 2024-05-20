@@ -1,3 +1,5 @@
+'use client';
+
 import getTimeFromMins from '@/utils/getTimeFromMins';
 import {
   NumberFormatter,

@@ -10,8 +10,12 @@ import SortBy from '@/components/inputs/sortBy';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/storeHooks';
 import { useForm } from '@mantine/form';
 import BtnWithoutBg from '@/components/btns/btnWithoutBg';
+import { useState } from 'react';
 import { setPage } from '@/lib/reducers/moviesFiltersSlice';
 import Sidebar from '@/components/sidebar/sidebar';
+import RatingModal from '@/components/modal/ratingModal';
+import useModal from '@/lib/hooks/useModal';
+import { Movie } from '@/types/interfaces';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -37,6 +41,9 @@ export default function Home() {
   });
 
   const dispatch = useAppDispatch();
+  const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
+  const { toggle } = useModal();
+  const [clickedMovie, setClickedMovie] = useState<Movie>();
 
   return (
     <Flex>
@@ -67,7 +74,11 @@ export default function Home() {
               <Grid columns={2} grow>
                 {data?.results.map((movie) => (
                   <Grid.Col span={1} key={movie.id}>
-                    <MovieCard movie={movie} imageMaxWidth={119} />
+                    <MovieCard
+                      movie={movie}
+                      imageMaxWidth={119}
+                      clickMovieByStar={() => setClickedMovie(movie)}
+                    />
                   </Grid.Col>
                 ))}
               </Grid>
@@ -81,6 +92,7 @@ export default function Home() {
           )}
         </Stack>
       </main>
+      <RatingModal isOpen={isOpen} toggle={toggle} movie={clickedMovie} />
     </Flex>
   );
 }

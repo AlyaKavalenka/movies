@@ -10,6 +10,7 @@ interface InitialValues {
     vote_average: number;
     vote_count: number;
     genres: Genre[];
+    userRate: number;
   }[];
 }
 
@@ -20,7 +21,15 @@ const ratedMoviesSlice = createSlice({
   },
   reducers: {
     addRatedMovie: (state, action) => {
-      state.movies.push(action.payload);
+      const foundIndex = state.movies.findIndex(
+        (movie) => movie.id === action.payload.id,
+      );
+
+      if (foundIndex === -1) {
+        state.movies.push(action.payload);
+      } else {
+        state.movies.splice(foundIndex, 1, action.payload);
+      }
     },
   },
 });

@@ -2,6 +2,7 @@
 
 import { Flex, NavLink, Stack } from '@mantine/core';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import sidebarStyles from './sidebar.module.scss';
 import Logo from '../logo';
 
@@ -18,6 +19,7 @@ export default function Sidebar() {
           variant="filled"
           active={pathname === '/'}
           className={sidebarStyles.root}
+          component={Link}
         />
 
         <NavLink
@@ -26,6 +28,7 @@ export default function Sidebar() {
           variant="filled"
           active={pathname === '/rated'}
           className={sidebarStyles.root}
+          component={Link}
         />
       </Stack>
     </Flex>

@@ -43,18 +43,14 @@ export default function MoviePage({
             <Breadcrumbs>{breadcrumbsItems}</Breadcrumbs>
             {data ? <MovieCard movie={data} imageMaxWidth={250} /> : ''}
             <MovieCardDescription
-              video={data?.videos.results[0]}
+              video={data?.videos?.results[0]}
               overview={data?.overview}
               productionCompanies={data?.production_companies}
             />
           </Stack>
         )}
       </main>
-      <RatingModal
-        isOpen={isOpen}
-        toggle={toggle}
-        movieTitle={data?.title}
-      ></RatingModal>
+      <RatingModal isOpen={isOpen} toggle={toggle} movie={data} />
     </Flex>
   );
 }

@@ -12,6 +12,7 @@ import { Movie } from '@/types/interfaces';
 import { useGetGenresQuery } from '@/lib/api/endpoints/genres';
 import Link from 'next/link';
 import useModal from '@/lib/hooks/useModal';
+import { useAppSelector } from '@/lib/hooks/storeHooks';
 import StarIcon from '../../assets/star';
 import styles from './movieCard.module.scss';
 import NoPoster from '../noPoster/noPoster';
@@ -20,10 +21,11 @@ import MovieCardTable from './movieCardTable';
 interface MovieCardProps {
   movie: Movie;
   imageMaxWidth: number;
+  clickMovieByStar?: () => void;
 }
 
 export default function MovieCard(props: MovieCardProps) {
-  const { movie, imageMaxWidth } = props;
+  const { movie, imageMaxWidth, clickMovieByStar } = props;
   const {
     title,
     poster_path,
@@ -54,6 +56,10 @@ export default function MovieCard(props: MovieCardProps) {
   }
 
   const { toggle } = useModal();
+  const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
+  const foundInRated = ratedMovies.find(
+    (ratedMovie) => ratedMovie.id === movie.id,
+  );
 
   return (
     <Paper p="24px" radius="12px" component={Link} href={`/${id}`}>
@@ -87,15 +93,19 @@ export default function MovieCard(props: MovieCardProps) {
           <Grid.Col span="auto" py={0}>
             <section className={styles.cardWStar}>
               <article className={styles.cardInfo}>
-                <Flex justify="space-between">
+                <Flex justify="space-between" align="flex-start">
                   <div className={styles.cardInfo__top}>
                     <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
                       {title}
                     </Title>
-                    {release_date?.length > 0 && (
-                      <Text c="gray.6">
-                        {new Date(release_date).getFullYear()}
-                      </Text>
+                    {release_date && (
+                      <>
+                        {release_date?.length > 0 && (
+                          <Text c="gray.6">
+                            {new Date(release_date).getFullYear()}
+                          </Text>
+                        )}
+                      </>
                     )}
                     <Flex gap="8px" align="center" wrap="wrap">
                       <Flex gap="4px" align="center" wrap="wrap">
@@ -113,9 +123,25 @@ export default function MovieCard(props: MovieCardProps) {
                       </Text>
                     </Flex>
                   </div>
-                  <ActionIcon variant="transparent" onClick={() => toggle()}>
-                    <StarIcon color="gray" />
-                  </ActionIcon>
+                  <Flex gap={4} align="center">
+                    <ActionIcon
+                      variant="transparent"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (clickMovieByStar) clickMovieByStar();
+                        toggle();
+                      }}
+                    >
+                      <StarIcon
+                        color={foundInRated !== undefined ? 'purple' : 'gray'}
+                      />
+                    </ActionIcon>
+                    {foundInRated !== undefined ? (
+                      <Text fw={600}>{foundInRated.userRate}</Text>
+                    ) : (
+                      ''
+                    )}
+                  </Flex>
                 </Flex>
                 <MovieCardTable
                   runtime={runtime}

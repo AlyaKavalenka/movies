@@ -35,17 +35,17 @@ export type Video = {
 };
 
 export interface Movie {
-  adult: boolean;
-  backdrop_path: string;
+  adult?: boolean;
+  backdrop_path?: string;
   id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
+  original_language?: string;
+  original_title?: string;
+  overview?: string;
   popularity: number;
   poster_path: string;
-  release_date: string;
+  release_date?: string;
   title: string;
-  video: boolean;
+  video?: boolean;
   vote_average: number;
   vote_count: number;
   genre_ids?: number[];
@@ -67,7 +67,7 @@ export interface Movie {
   spoken_languages?: SpokenLanguage[];
   status?: string;
   tagline?: string;
-  videos: {
+  videos?: {
     results: Video[];
   };
 }
@@ -90,6 +90,5 @@ export type SortByType =
 export interface ModalProps {
   isOpen: boolean;
   toggle: () => void;
-  movieTitle?: string;
-  ratingDefaultValue?: number;
+  movie?: Movie;
 }
