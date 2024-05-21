@@ -10,6 +10,7 @@ import { Flex, Grid, Pagination, Stack, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '@/lib/hooks/useLocalStorage';
 import Search from '@/components/inputs/search';
+import { usePathname, useRouter } from 'next/navigation';
 import styles from './ratedPage.module.scss';
 
 export default function RatedPage({
@@ -22,6 +23,10 @@ export default function RatedPage({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const limit = 4;
 
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
 
@@ -36,20 +41,41 @@ export default function RatedPage({
   }, []);
 
   const [filteredMovies, setFilteredMovies] = useState(ratedMovies);
+  const [totalPages, setTotalPages] = useState(1);
+  const [startIndex, setStartIndex] = useState((currentPage - 1) * limit);
+  const [endIndex, setEndIndex] = useState(startIndex + limit);
 
   useEffect(() => {
-    if (query.length > 0) {
-      setFilteredMovies(
-        ratedMovies.filter((movie) => {
-          const regexp = new RegExp(query, 'i');
+    let filterResult = [];
 
-          return regexp.test(movie.title);
-        }),
-      );
+    if (query.length > 0) {
+      filterResult = ratedMovies.filter((movie) => {
+        const regexp = new RegExp(query, 'i');
+
+        return regexp.test(movie.title);
+      });
     } else {
-      setFilteredMovies(ratedMovies);
+      filterResult = ratedMovies;
     }
+
+    setFilteredMovies(filterResult);
   }, [query, currentPage, ratedMovies]);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(filteredMovies.length / limit));
+  }, [filteredMovies]);
+
+  useEffect(() => {
+    const newStartIndex = (currentPage - 1) * limit;
+    setStartIndex(newStartIndex);
+    setEndIndex(newStartIndex + limit);
+  }, [currentPage]);
+
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', pageNumber.toString());
+    replace(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <Flex>
@@ -64,7 +90,7 @@ export default function RatedPage({
         {ratedMovies.length ? (
           <Stack align="center" gap={24}>
             <Grid columns={2} grow>
-              {filteredMovies.map((movie) => (
+              {[...filteredMovies.slice(startIndex, endIndex)].map((movie) => (
                 <Grid.Col span={1} key={movie.id}>
                   <MovieCard
                     movie={movie}
@@ -74,7 +100,18 @@ export default function RatedPage({
                 </Grid.Col>
               ))}
             </Grid>
-            <Pagination total={ratedMovies.length / 4 || 1} color="purple.5" />
+            <Pagination
+              boundaries={0}
+              total={totalPages}
+              color="purple.5"
+              onChange={createPageURL}
+              styles={{
+                dots: {
+                  display: 'none',
+                },
+              }}
+              value={currentPage}
+            />
           </Stack>
         ) : (
           ''

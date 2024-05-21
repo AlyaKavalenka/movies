@@ -111,6 +111,12 @@ export default function Home() {
                 color="purple.5"
                 value={data?.page}
                 onChange={(value) => dispatch(setPage(value))}
+                boundaries={0}
+                styles={{
+                  dots: {
+                    display: 'none',
+                  },
+                }}
               />
             </Group>
           )}
