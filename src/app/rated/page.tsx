@@ -12,7 +12,17 @@ import useLocalStorage from '@/lib/hooks/useLocalStorage';
 import Search from '@/components/inputs/search';
 import styles from './ratedPage.module.scss';
 
-export default function RatedPage() {
+export default function RatedPage({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
 
   const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
@@ -24,6 +34,22 @@ export default function RatedPage() {
     synchronize();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [filteredMovies, setFilteredMovies] = useState(ratedMovies);
+
+  useEffect(() => {
+    if (query.length > 0) {
+      setFilteredMovies(
+        ratedMovies.filter((movie) => {
+          const regexp = new RegExp(query, 'i');
+
+          return regexp.test(movie.title);
+        }),
+      );
+    } else {
+      setFilteredMovies(ratedMovies);
+    }
+  }, [query, currentPage, ratedMovies]);
 
   return (
     <Flex>
@@ -38,7 +64,7 @@ export default function RatedPage() {
         {ratedMovies.length ? (
           <Stack align="center" gap={24}>
             <Grid columns={2} grow>
-              {ratedMovies.map((movie) => (
+              {filteredMovies.map((movie) => (
                 <Grid.Col span={1} key={movie.id}>
                   <MovieCard
                     movie={movie}

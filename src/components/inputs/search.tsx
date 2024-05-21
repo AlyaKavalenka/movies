@@ -1,9 +1,28 @@
+'use client';
+
 import { Button, Image, TextInput, TextInputProps } from '@mantine/core';
 import NextImage from 'next/image';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useDebouncedCallback } from '@mantine/hooks';
 import searchIcon from '../../../public/images/svg/search-icon.svg';
 import styles from './search.module.scss';
 
 export default function Search(props: TextInputProps) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
+
   return (
     <TextInput
       radius="md"
@@ -27,6 +46,10 @@ export default function Search(props: TextInputProps) {
       }
       classNames={{ input: styles.searchTextInput }}
       {...props}
+      onChange={(e) => {
+        handleSearch(e.target.value);
+      }}
+      defaultValue={searchParams.get('query')?.toString()}
     />
   );
 }
