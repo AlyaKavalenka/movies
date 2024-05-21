@@ -6,9 +6,10 @@ import Sidebar from '@/components/sidebar/sidebar';
 import { useAppSelector } from '@/lib/hooks/storeHooks';
 import useModal from '@/lib/hooks/useModal';
 import { Movie } from '@/types/interfaces';
-import { Flex, Grid, Group, Title } from '@mantine/core';
+import { Flex, Grid, Pagination, Stack, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '@/lib/hooks/useLocalStorage';
+import Search from '@/components/inputs/search';
 import styles from './ratedPage.module.scss';
 
 export default function RatedPage() {
@@ -27,15 +28,31 @@ export default function RatedPage() {
   return (
     <Flex>
       <Sidebar />
-      <main>
-        {ratedMovies.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            imageMaxWidth={119}
-            clickMovieByStar={() => setClickedMovie(movie)}
-          />
-        ))}
+      <main className={styles.main}>
+        <Flex w="100%" justify="space-between" gap="xs">
+          <Title order={1} size={32}>
+            Rated movies
+          </Title>
+          <Search flex="1 1 0" maw={490} />
+        </Flex>
+        {ratedMovies.length ? (
+          <Stack align="center" gap={24}>
+            <Grid columns={2} grow>
+              {ratedMovies.map((movie) => (
+                <Grid.Col span={1} key={movie.id}>
+                  <MovieCard
+                    movie={movie}
+                    imageMaxWidth={119}
+                    clickMovieByStar={() => setClickedMovie(movie)}
+                  />
+                </Grid.Col>
+              ))}
+            </Grid>
+            <Pagination total={ratedMovies.length / 4 || 1} color="purple.5" />
+          </Stack>
+        ) : (
+          ''
+        )}
       </main>
       <RatingModal isOpen={isOpen} toggle={toggle} movie={clickedMovie} />
     </Flex>

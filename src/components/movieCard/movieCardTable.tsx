@@ -81,7 +81,7 @@ export default function MovieCardTable(props: MovieCardTableProps) {
 
   const rows = elements.map((element) => {
     if (element.value) {
-      if (pathname === '/') {
+      if (pathname === '/' || pathname === '/rated') {
         if (element.name === 'Genres') {
           return row(element);
         }
