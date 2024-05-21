@@ -16,6 +16,7 @@ import Sidebar from '@/components/sidebar/sidebar';
 import RatingModal from '@/components/modal/ratingModal';
 import useModal from '@/lib/hooks/useModal';
 import { Movie } from '@/types/interfaces';
+import useLocalStorage from '@/lib/hooks/useLocalStorage';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -59,6 +60,13 @@ export default function Home() {
       ),
     );
   }, [moviesFilters]);
+
+  const { synchronize } = useLocalStorage([]);
+
+  useEffect(() => {
+    synchronize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Flex>

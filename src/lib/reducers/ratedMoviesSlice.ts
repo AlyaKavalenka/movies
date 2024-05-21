@@ -14,14 +14,6 @@ interface InitialValues {
   }[];
 }
 
-function getFromLocalStorage() {
-  if (typeof window !== 'undefined') {
-    const movies = localStorage.getItem('ratedMovies');
-    return movies ? JSON.parse(movies) : undefined;
-  }
-  return undefined;
-}
-
 function saveInLocalStorage(movies: Movie[]) {
   if (typeof window !== 'undefined') {
     localStorage.setItem('ratedMovies', JSON.stringify(movies));
@@ -31,7 +23,7 @@ function saveInLocalStorage(movies: Movie[]) {
 const ratedMoviesSlice = createSlice({
   name: 'ratedMoviesSlice',
   initialState: <InitialValues>{
-    movies: getFromLocalStorage() || [],
+    movies: [],
   },
   reducers: {
     addRatedMovie: (state, action) => {
@@ -58,9 +50,13 @@ const ratedMoviesSlice = createSlice({
         saveInLocalStorage(state.movies);
       }
     },
+    setMoviesInitialState: (state, action) => {
+      state.movies = action.payload;
+    },
   },
 });
 
-export const { addRatedMovie, removeRatedMovie } = ratedMoviesSlice.actions;
+export const { addRatedMovie, removeRatedMovie, setMoviesInitialState } =
+  ratedMoviesSlice.actions;
 
 export default ratedMoviesSlice.reducer;

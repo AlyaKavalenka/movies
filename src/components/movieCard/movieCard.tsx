@@ -46,10 +46,13 @@ export default function MovieCard(props: MovieCardProps) {
 
   if (genre_ids) {
     genresTitles = genre_ids.map((genreId) => {
-      const foundGenre = data.genres.find(
-        (dataGenre: { id: number; name: string }) => dataGenre.id === genreId,
-      );
-      return foundGenre.name;
+      if (data) {
+        const foundGenre = data.genres.find(
+          (dataGenre: { id: number; name: string }) => dataGenre.id === genreId,
+        );
+        return foundGenre.name;
+      }
+      return undefined;
     });
   } else if (genres) {
     genresTitles = genres.map((genre) => genre.name);

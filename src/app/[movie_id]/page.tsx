@@ -8,6 +8,8 @@ import MovieCardDescription from '@/components/movieCard/movieCardDesciption';
 import { useAppSelector } from '@/lib/hooks/storeHooks';
 import useModal from '@/lib/hooks/useModal';
 import RatingModal from '@/components/modal/ratingModal';
+import { useEffect } from 'react';
+import useLocalStorage from '@/lib/hooks/useLocalStorage';
 import styles from './moviePage.module.scss';
 
 export default function MoviePage({
@@ -29,6 +31,12 @@ export default function MoviePage({
   const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
 
   const { toggle } = useModal();
+  const { synchronize } = useLocalStorage([]);
+
+  useEffect(() => {
+    synchronize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Flex>
