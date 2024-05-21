@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import useLocalStorage from '@/lib/hooks/useLocalStorage';
 import Search from '@/components/inputs/search';
 import { usePathname, useRouter } from 'next/navigation';
+import NoRated from '@/components/noRated/noRated';
 import styles from './ratedPage.module.scss';
 
 export default function RatedPage({
@@ -78,43 +79,47 @@ export default function RatedPage({
   };
 
   return (
-    <Flex>
+    <Flex mih="100vh">
       <Sidebar />
       <main className={styles.main}>
-        <Flex w="100%" justify="space-between" gap="xs">
-          <Title order={1} size={32}>
-            Rated movies
-          </Title>
-          <Search flex="1 1 0" maw={490} />
-        </Flex>
         {ratedMovies.length ? (
-          <Stack align="center" gap={24}>
-            <Grid columns={2} grow>
-              {[...filteredMovies.slice(startIndex, endIndex)].map((movie) => (
-                <Grid.Col span={1} key={movie.id}>
-                  <MovieCard
-                    movie={movie}
-                    imageMaxWidth={119}
-                    clickMovieByStar={() => setClickedMovie(movie)}
-                  />
-                </Grid.Col>
-              ))}
-            </Grid>
-            <Pagination
-              boundaries={0}
-              total={totalPages}
-              color="purple.5"
-              onChange={createPageURL}
-              styles={{
-                dots: {
-                  display: 'none',
-                },
-              }}
-              value={currentPage}
-            />
-          </Stack>
+          <>
+            <Flex w="100%" justify="space-between" gap="xs">
+              <Title order={1} size={32}>
+                Rated movies
+              </Title>
+              <Search flex="1 1 0" maw={490} />
+            </Flex>
+            <Stack align="center" gap={24}>
+              <Grid columns={2} grow>
+                {[...filteredMovies.slice(startIndex, endIndex)].map(
+                  (movie) => (
+                    <Grid.Col span={1} key={movie.id}>
+                      <MovieCard
+                        movie={movie}
+                        imageMaxWidth={119}
+                        clickMovieByStar={() => setClickedMovie(movie)}
+                      />
+                    </Grid.Col>
+                  ),
+                )}
+              </Grid>
+              <Pagination
+                boundaries={0}
+                total={totalPages}
+                color="purple.5"
+                onChange={createPageURL}
+                styles={{
+                  dots: {
+                    display: 'none',
+                  },
+                }}
+                value={currentPage}
+              />
+            </Stack>
+          </>
         ) : (
-          ''
+          <NoRated />
         )}
       </main>
       <RatingModal isOpen={isOpen} toggle={toggle} movie={clickedMovie} />
