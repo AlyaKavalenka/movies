@@ -17,6 +17,7 @@ import RatingModal from '@/components/modal/ratingModal';
 import useModal from '@/lib/hooks/useModal';
 import { Movie } from '@/types/interfaces';
 import useLocalStorage from '@/lib/hooks/useLocalStorage';
+import NoFoundMovies from '@/components/noFoundMovies/noFoundMovies';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -69,13 +70,13 @@ export default function Home() {
   }, []);
 
   return (
-    <Flex>
+    <Flex mih="100vh">
       <Sidebar />
       <main className={styles.main}>
         <Title order={1} size={32}>
           Movies
         </Title>
-        <Stack>
+        <Stack flex="1 1 0">
           <Flex align="flex-end" gap={16} wrap="wrap">
             <Genres key={form.key('genres')} />
             <ReleaseYear key={form.key('releaseYear')} />
@@ -93,7 +94,7 @@ export default function Home() {
             <>Oh no, there was an error</>
           ) : isLoading ? (
             <>Loading...</>
-          ) : (
+          ) : data?.results.length ? (
             <Group justify="flex-end">
               <Grid columns={2} grow>
                 {data?.results.map((movie) => (
@@ -119,6 +120,8 @@ export default function Home() {
                 }}
               />
             </Group>
+          ) : (
+            <NoFoundMovies />
           )}
         </Stack>
       </main>
