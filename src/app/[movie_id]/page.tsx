@@ -10,6 +10,7 @@ import useModal from '@/lib/hooks/useModal';
 import RatingModal from '@/components/modal/ratingModal';
 import { useEffect } from 'react';
 import useLocalStorage from '@/lib/hooks/useLocalStorage';
+import CustomLoader from '@/components/customLoader/customLoader';
 import styles from './moviePage.module.scss';
 
 export default function MoviePage({
@@ -19,6 +20,7 @@ export default function MoviePage({
 }) {
   const { data, isLoading, error } = useGetMovieQuery({ id: params.movie_id });
 
+  // TODO: fix in case when clicked from rated
   const breadcrumbsItems = [
     { title: 'Movies', href: '/' },
     { title: data?.title, href: `/${params.movie_id}` },
@@ -39,13 +41,13 @@ export default function MoviePage({
   }, []);
 
   return (
-    <Flex>
+    <Flex mih="100vh">
       <Sidebar />
       <main className={styles.main}>
         {error ? (
           <>Oh no, there was an error</>
         ) : isLoading ? (
-          <>Loading...</>
+          <CustomLoader />
         ) : (
           <Stack>
             <Breadcrumbs>{breadcrumbsItems}</Breadcrumbs>

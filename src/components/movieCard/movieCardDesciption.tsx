@@ -30,7 +30,7 @@ export default function MovieCardDescription(props: MovieCardDescriptionProps) {
         )}
         {overview && (
           <>
-            <Divider />
+            {video && <Divider />}
             <Stack>
               <Text fw={700} lh="20px" fz="20px">
                 Description
@@ -43,7 +43,7 @@ export default function MovieCardDescription(props: MovieCardDescriptionProps) {
           <>
             {productionCompanies.length > 0 ? (
               <>
-                <Divider />
+                {(video || overview) && <Divider />}
                 <Stack>
                   <Text fw={700} lh="20px" fz="20px">
                     Production
