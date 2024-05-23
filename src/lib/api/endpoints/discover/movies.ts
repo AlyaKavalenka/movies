@@ -1,8 +1,6 @@
 import { Movie, Movies } from '@/types/interfaces';
 import { api } from '../../api';
 
-const api_key = process.env.NEXT_PUBLIC_API_KEY;
-
 const movies = api.injectEndpoints({
   endpoints: (builder) => ({
     getMovies: builder.query({
@@ -22,7 +20,7 @@ const movies = api.injectEndpoints({
         };
         page: number;
       }) =>
-        `discover/movie?api_key=${api_key}&language=en-US&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}${primary_release_year ? `&primary_release_year=${primary_release_year}` : ''}${vote_average.lte ? `&vote_average.lte=${vote_average.lte}` : ''}${vote_average.gte ? `&vote_average.gte=${vote_average.gte}` : ''}&page=${page}`,
+        `discover/movie?language=en-US&sort_by=${sortBy === null ? 'popularity.desc' : sortBy}${with_genres ? `&with_genres=${with_genres}` : ''}${primary_release_year ? `&primary_release_year=${primary_release_year}` : ''}${vote_average.lte ? `&vote_average.lte=${vote_average.lte}` : ''}${vote_average.gte ? `&vote_average.gte=${vote_average.gte}` : ''}&page=${page}`,
 
       transformResponse: (response: Movies) => {
         response.results.map((movie) => {
@@ -46,7 +44,7 @@ const movies = api.injectEndpoints({
     }),
     getMovie: builder.query({
       query: ({ id }: { id: number }) =>
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=videos`,
+        `movie/${id}?&language=en-US&append_to_response=videos`,
       transformResponse: (response: Movie) => ({
         ...response,
         poster_path: response.poster_path
