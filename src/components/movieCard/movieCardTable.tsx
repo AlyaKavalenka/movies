@@ -1,15 +1,9 @@
 'use client';
 
 import getTimeFromMins from '@/utils/getTimeFromMins';
-import {
-  NumberFormatter,
-  Table,
-  TableTbody,
-  TableTd,
-  TableTr,
-  Text,
-} from '@mantine/core';
+import { NumberFormatter, Table, TableTd, TableTr } from '@mantine/core';
 import { usePathname } from 'next/navigation';
+import styles from './movieCard.module.scss';
 
 interface MovieCardTableProps {
   runtime: number | undefined;
@@ -51,9 +45,7 @@ export default function MovieCardTable(props: MovieCardTableProps) {
     {
       name: 'Genres',
       value: genres ? (
-        <Text truncate="end" span>
-          {genres?.join(', ')}
-        </Text>
+        <span className={styles.genresText}>{genres?.join(', ')}</span>
       ) : undefined,
     },
   ];
@@ -70,10 +62,17 @@ export default function MovieCardTable(props: MovieCardTableProps) {
         },
   ) => (
     <TableTr key={element.name} fz={16}>
-      <TableTd c="gray.6" lh="20px" pl={0} pr={8}>
+      <TableTd
+        c="gray.6"
+        lh="20px"
+        pl={0}
+        pr={8}
+        miw="0"
+        className={styles.table__rowName}
+      >
         {element.name}
       </TableTd>
-      <TableTd lh="20px" px={0}>
+      <TableTd lh="20px" px={0} className={styles.table__rowValue}>
         {element.value}
       </TableTd>
     </TableTr>
@@ -93,8 +92,8 @@ export default function MovieCardTable(props: MovieCardTableProps) {
   });
 
   return (
-    <Table withRowBorders={false} w="100%">
-      <TableTbody>{rows}</TableTbody>
+    <Table withRowBorders={false} className={styles.table}>
+      {rows}
     </Table>
   );
 }

@@ -1,12 +1,4 @@
-import {
-  ActionIcon,
-  Flex,
-  Grid,
-  Image,
-  Paper,
-  Text,
-  Title,
-} from '@mantine/core';
+import { ActionIcon, Flex, Image, Paper, Text, Title } from '@mantine/core';
 import NextImage from 'next/image';
 import { Movie } from '@/types/interfaces';
 import { useGetGenresQuery } from '@/lib/api/endpoints/genres';
@@ -21,11 +13,10 @@ import MovieCardTable from './movieCardTable';
 interface MovieCardProps {
   movie: Movie;
   imageMaxWidth: number;
-  clickMovieByStar?: () => void;
 }
 
 export default function MovieCard(props: MovieCardProps) {
-  const { movie, imageMaxWidth, clickMovieByStar } = props;
+  const { movie, imageMaxWidth } = props;
   const {
     title,
     poster_path,
@@ -58,21 +49,26 @@ export default function MovieCard(props: MovieCardProps) {
     genresTitles = genres.map((genre) => genre.name);
   }
 
-  const { toggle } = useModal();
+  const { toggle, setMovie } = useModal();
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
   const foundInRated = ratedMovies.find(
     (ratedMovie) => ratedMovie.id === movie.id,
   );
 
   return (
-    <Paper p="24px" radius="12px" component={Link} href={`/${id}`}>
+    <Paper
+      radius="12px"
+      component={Link}
+      href={`/${id}`}
+      className={styles.card}
+    >
       {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (
         <>Loading...</>
       ) : (
-        <Grid gutter="md">
-          <Grid.Col span="content">
+        <div className={styles.card__wrapper}>
+          <div>
             {poster_path ? (
               <Image
                 component={NextImage}
@@ -88,75 +84,71 @@ export default function MovieCard(props: MovieCardProps) {
                 placeholder="blur"
                 sizes="100vw"
                 blurDataURL={poster_path}
+                className={styles.image}
               />
             ) : (
               <NoPoster />
             )}
-          </Grid.Col>
-          <Grid.Col span="auto" py={0}>
-            <section className={styles.cardWStar}>
-              <article className={styles.cardInfo}>
-                <Flex justify="space-between" align="flex-start">
-                  <div className={styles.cardInfo__top}>
-                    <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
-                      {title}
-                    </Title>
-                    {release_date && (
-                      <>
-                        {release_date?.length > 0 && (
-                          <Text c="gray.6">
-                            {new Date(release_date).getFullYear()}
-                          </Text>
-                        )}
-                      </>
-                    )}
-                    <Flex gap="8px" align="center" wrap="wrap">
-                      <Flex gap="4px" align="center" wrap="wrap">
-                        <StarIcon color="yellow" />
-                        <Text fw="600">
-                          {Math.round(vote_average * 10) / 10}
-                        </Text>
-                      </Flex>
+          </div>
+
+          <section className={styles.cardInfo}>
+            <Flex justify="space-between" align="flex-start">
+              <div className={styles.cardInfo__top}>
+                <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
+                  {title}
+                </Title>
+                {release_date && (
+                  <>
+                    {release_date?.length > 0 && (
                       <Text c="gray.6">
-                        (
-                        {vote_count > 999
-                          ? `${Math.round((vote_count * 10) / 1000) / 10}M`
-                          : vote_count}
-                        )
+                        {new Date(release_date).getFullYear()}
                       </Text>
-                    </Flex>
-                  </div>
-                  <Flex gap={4} align="center">
-                    <ActionIcon
-                      variant="transparent"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (clickMovieByStar) clickMovieByStar();
-                        toggle();
-                      }}
-                    >
-                      <StarIcon
-                        color={foundInRated !== undefined ? 'purple' : 'gray'}
-                      />
-                    </ActionIcon>
-                    {foundInRated !== undefined ? (
-                      <Text fw={600}>{foundInRated.userRate}</Text>
-                    ) : (
-                      ''
                     )}
+                  </>
+                )}
+                <Flex gap="8px" align="center" wrap="wrap">
+                  <Flex gap="4px" align="center" wrap="wrap">
+                    <StarIcon color="yellow" />
+                    <Text fw="600">{Math.round(vote_average * 10) / 10}</Text>
                   </Flex>
+                  <Text c="gray.6">
+                    (
+                    {vote_count > 999
+                      ? `${Math.round((vote_count * 10) / 1000) / 10}M`
+                      : vote_count}
+                    )
+                  </Text>
                 </Flex>
-                <MovieCardTable
-                  runtime={runtime}
-                  release_date={release_date}
-                  budget={budget}
-                  revenue={revenue}
-                  genres={genresTitles}
-                />
-              </article>
-            </section>
-          </Grid.Col>
-        </Grid>
+              </div>
+              <Flex gap={4} align="center">
+                <ActionIcon
+                  variant="transparent"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMovie(movie);
+                    toggle();
+                  }}
+                >
+                  <StarIcon
+                    color={foundInRated !== undefined ? 'purple' : 'gray'}
+                  />
+                </ActionIcon>
+                {foundInRated !== undefined ? (
+                  <Text fw={600}>{foundInRated.userRate}</Text>
+                ) : (
+                  ''
+                )}
+              </Flex>
+            </Flex>
+            <MovieCardTable
+              runtime={runtime}
+              release_date={release_date}
+              budget={budget}
+              revenue={revenue}
+              genres={genresTitles}
+            />
+          </section>
+        </div>
       )}
     </Paper>
   );

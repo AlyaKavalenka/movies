@@ -1,6 +1,6 @@
 'use client';
 
-import { Flex, NavLink, Stack } from '@mantine/core';
+import { Flex, NavLink } from '@mantine/core';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import sidebarStyles from './sidebar.module.scss';
@@ -10,9 +10,9 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <Flex bg="purple.1" p="lg" direction="column" gap="80px">
+    <Flex bg="purple.1" p="lg" className={sidebarStyles.sidebar}>
       <Logo />
-      <Stack gap="md">
+      <Flex className={sidebarStyles.sidebar__links}>
         <NavLink
           href="/"
           label="Movies"
@@ -30,7 +30,7 @@ export default function Sidebar() {
           className={sidebarStyles.root}
           component={Link}
         />
-      </Stack>
+      </Flex>
     </Flex>
   );
 }

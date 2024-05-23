@@ -1,14 +1,10 @@
 'use client';
 
-import RatingModal from '@/components/modal/ratingModal';
 import MovieCard from '@/components/movieCard/movieCard';
-import Sidebar from '@/components/sidebar/sidebar';
 import { useAppSelector } from '@/lib/hooks/storeHooks';
-import useModal from '@/lib/hooks/useModal';
-import { Movie } from '@/types/interfaces';
-import { Flex, Grid, Pagination, Stack, Title } from '@mantine/core';
+import { Flex, Pagination, Stack, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import useLocalStorage from '@/lib/hooks/useLocalStorage';
+import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
 import Search from '@/components/inputs/search';
 import { usePathname, useRouter } from 'next/navigation';
 import NoRated from '@/components/noRated/noRated';
@@ -30,16 +26,6 @@ export default function RatedPage({
   const limit = 4;
 
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
-
-  const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
-  const { toggle } = useModal();
-  const [clickedMovie, setClickedMovie] = useState<Movie>();
-  const { synchronize } = useLocalStorage([]);
-
-  useEffect(() => {
-    synchronize();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const [filteredMovies, setFilteredMovies] = useState(ratedMovies);
   const [totalPages, setTotalPages] = useState(1);
@@ -79,31 +65,26 @@ export default function RatedPage({
   };
 
   return (
-    <Flex mih="100vh">
-      <Sidebar />
+    <LayoutWSidebar>
       <main className={styles.main}>
         {ratedMovies.length ? (
           <>
-            <Flex w="100%" justify="space-between" gap="xs">
+            <Flex w="100%" justify="space-between" gap="xs" wrap="wrap">
               <Title order={1} size={32}>
                 Rated movies
               </Title>
               <Search flex="1 1 0" maw={490} />
             </Flex>
-            <Stack align="center" gap={24}>
-              <Grid columns={2} grow>
+            <Stack gap={24} w="100%">
+              <div className={styles.cards}>
                 {[...filteredMovies.slice(startIndex, endIndex)].map(
                   (movie) => (
-                    <Grid.Col span={1} key={movie.id}>
-                      <MovieCard
-                        movie={movie}
-                        imageMaxWidth={119}
-                        clickMovieByStar={() => setClickedMovie(movie)}
-                      />
-                    </Grid.Col>
+                    <div key={movie.id}>
+                      <MovieCard movie={movie} imageMaxWidth={119} />
+                    </div>
                   ),
                 )}
-              </Grid>
+              </div>
               <Pagination
                 boundaries={0}
                 total={totalPages}
@@ -112,6 +93,9 @@ export default function RatedPage({
                 styles={{
                   dots: {
                     display: 'none',
+                  },
+                  root: {
+                    alignSelf: 'center',
                   },
                 }}
                 value={currentPage}
@@ -122,7 +106,6 @@ export default function RatedPage({
           <NoRated />
         )}
       </main>
-      <RatingModal isOpen={isOpen} toggle={toggle} movie={clickedMovie} />
-    </Flex>
+    </LayoutWSidebar>
   );
 }

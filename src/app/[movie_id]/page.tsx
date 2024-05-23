@@ -1,15 +1,10 @@
 'use client';
 
 import MovieCard from '@/components/movieCard/movieCard';
-import Sidebar from '@/components/sidebar/sidebar';
 import { useGetMovieQuery } from '@/lib/api/endpoints/discover/movies';
-import { Anchor, Breadcrumbs, Flex, Stack, Text } from '@mantine/core';
+import { Anchor, Breadcrumbs, Stack, Text } from '@mantine/core';
 import MovieCardDescription from '@/components/movieCard/movieCardDesciption';
-import { useAppSelector } from '@/lib/hooks/storeHooks';
-import useModal from '@/lib/hooks/useModal';
-import RatingModal from '@/components/modal/ratingModal';
-import { useEffect } from 'react';
-import useLocalStorage from '@/lib/hooks/useLocalStorage';
+import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
 import CustomLoader from '@/components/customLoader/customLoader';
 import { notFound } from 'next/navigation';
 import styles from './moviePage.module.scss';
@@ -31,16 +26,6 @@ export default function MoviePage({
     </Anchor>
   ));
 
-  const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
-
-  const { toggle } = useModal();
-  const { synchronize } = useLocalStorage([]);
-
-  useEffect(() => {
-    synchronize();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const ErrorView = () => {
     if (error) {
       if ('status' in error) {
@@ -52,8 +37,7 @@ export default function MoviePage({
   };
 
   return (
-    <Flex mih="100vh">
-      <Sidebar />
+    <LayoutWSidebar>
       <main className={styles.main}>
         {error ? (
           <>{ErrorView()}</>
@@ -61,7 +45,9 @@ export default function MoviePage({
           <CustomLoader />
         ) : (
           <Stack>
-            <Breadcrumbs>{breadcrumbsItems}</Breadcrumbs>
+            <Breadcrumbs classNames={{ root: styles.breadcrumbs }}>
+              {breadcrumbsItems}
+            </Breadcrumbs>
             {data ? <MovieCard movie={data} imageMaxWidth={250} /> : ''}
             <MovieCardDescription
               video={data?.videos?.results[0]}
@@ -71,7 +57,6 @@ export default function MoviePage({
           </Stack>
         )}
       </main>
-      <RatingModal isOpen={isOpen} toggle={toggle} movie={data} />
-    </Flex>
+    </LayoutWSidebar>
   );
 }

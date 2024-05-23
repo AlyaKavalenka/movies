@@ -90,5 +90,4 @@ export type SortByType =
 export interface ModalProps {
   isOpen: boolean;
   toggle: () => void;
-  movie?: Movie;
 }
