@@ -1,6 +1,6 @@
 'use client';
 
-import { Flex, Grid, Group, Pagination, Stack, Title } from '@mantine/core';
+import { Flex, Group, Pagination, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
 import MovieCard from '@/components/movieCard/movieCard';
 import Genres from '@/components/inputs/genres';
@@ -82,13 +82,13 @@ export default function Home() {
             <CustomLoader />
           ) : data?.results.length ? (
             <Group justify="flex-end">
-              <Grid columns={2} grow>
+              <div className={styles.cards}>
                 {data?.results.map((movie) => (
-                  <Grid.Col span={1} key={movie.id}>
+                  <div key={movie.id}>
                     <MovieCard movie={movie} imageMaxWidth={119} />
-                  </Grid.Col>
+                  </div>
                 ))}
-              </Grid>
+              </div>
               <Pagination
                 total={data?.total_pages || 1}
                 color="purple.5"

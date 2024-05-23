@@ -9,3 +9,13 @@
     gap: .5rem;
   }
 }
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.11vw;
+
+  @include smaller-than($mantine-breakpoint-xs) {
+    grid-template-columns: 1fr;
+  }
+}
