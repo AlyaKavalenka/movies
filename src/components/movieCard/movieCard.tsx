@@ -82,7 +82,7 @@ export default function MovieCard(props: MovieCardProps) {
                 loading="lazy"
                 priority={false}
                 placeholder="blur"
-                sizes="100vw"
+                sizes="17vw"
                 blurDataURL={poster_path}
                 className={styles.image}
               />
