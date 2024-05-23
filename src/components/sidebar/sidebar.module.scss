@@ -20,3 +20,31 @@
     background-color: transparent;
   }
 }
+
+.sidebar {
+  flex-direction: column;
+  gap: 80px;
+
+  @include smaller-than($mantine-breakpoint-sm) {
+    flex-direction: row;
+  }
+
+  @include smaller-than($mantine-breakpoint-xs) {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__links {
+    flex-direction: column;
+    gap: 1rem;
+
+    @include smaller-than($mantine-breakpoint-sm) {
+      flex-direction: row;
+      flex: 1 0 auto;
+    }
+
+    @include smaller-than($mantine-breakpoint-xs) {
+      gap: none;
+    }
+  }
+}

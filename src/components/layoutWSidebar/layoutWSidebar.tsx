@@ -5,6 +5,7 @@ import useModal from '@/lib/hooks/useModal';
 import useLocalStorage from '@/lib/hooks/useLocalStorage';
 import RatingModal from '../modal/ratingModal';
 import Sidebar from '../sidebar/sidebar';
+import styles from './layoutWSidebar.module.scss';
 
 export default function LayoutWSidebar({
   children,
@@ -22,7 +23,7 @@ export default function LayoutWSidebar({
   }, []);
 
   return (
-    <Flex mih="100vh">
+    <Flex mih="100vh" className={styles.appWrapper}>
       <Sidebar />
       {children}
       <RatingModal isOpen={isOpen} toggle={toggle} />

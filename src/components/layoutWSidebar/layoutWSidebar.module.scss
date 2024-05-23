@@ -1,0 +1,5 @@
+.appWrapper {
+  @include smaller-than($mantine-breakpoint-sm) {
+    flex-direction: column;
+  }
+}
