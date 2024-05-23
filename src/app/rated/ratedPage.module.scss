@@ -1,8 +1,6 @@
 .main {
   padding: min(.8rem, 40px) min(6.25vw, 90px);
   gap: 40px;
-  align-items: flex-start;
-  height: inherit;
 
   @include smaller-than($mantine-breakpoint-sm) {
     gap: 10px;
