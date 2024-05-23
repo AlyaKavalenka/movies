@@ -1,0 +1,18 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: rem(24px);
+
+  background: var(--mantine-color-gray-1, #F5F5F6);
+
+  &__btn {
+    &:hover {
+      background: var(--mantine-color-purple-4, #BD93F7);
+    }
+
+    &:active {
+      background: var(--mantine-color-purple-6, #541F9D);
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.noPoster {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: rem(119px);
+  height: rem(170px);
+  gap: rem(4px);
+
+  border: 1px solid var(--mantine-color-gray-1, #F5F5F6);
+  background: var(--mantine-color-gray-2, #EAEBED);
+
+  &__text {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 133%;
+    color: var(--mantine-color-gray-5);
+  }
+}
