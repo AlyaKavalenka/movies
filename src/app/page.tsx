@@ -12,11 +12,7 @@ import { useForm } from '@mantine/form';
 import BtnWithoutBg from '@/components/btns/btnWithoutBg';
 import { useEffect, useState } from 'react';
 import { setPage } from '@/lib/reducers/moviesFiltersSlice';
-import Sidebar from '@/components/sidebar/sidebar';
-import RatingModal from '@/components/modal/ratingModal';
-import useModal from '@/lib/hooks/useModal';
-import { Movie } from '@/types/interfaces';
-import useLocalStorage from '@/lib/hooks/useLocalStorage';
+import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
 import NoFoundMovies from '@/components/noFoundMovies/noFoundMovies';
 import CustomLoader from '@/components/customLoader/customLoader';
 import styles from './page.module.scss';
@@ -44,9 +40,6 @@ export default function Home() {
   });
 
   const dispatch = useAppDispatch();
-  const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
-  const { toggle } = useModal();
-  const [clickedMovie, setClickedMovie] = useState<Movie>();
 
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -63,16 +56,8 @@ export default function Home() {
     );
   }, [moviesFilters]);
 
-  const { synchronize } = useLocalStorage([]);
-
-  useEffect(() => {
-    synchronize();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <Flex mih="100vh">
-      <Sidebar />
+    <LayoutWSidebar>
       <main className={styles.main}>
         <Title order={1} size={32}>
           Movies
@@ -100,11 +85,7 @@ export default function Home() {
               <Grid columns={2} grow>
                 {data?.results.map((movie) => (
                   <Grid.Col span={1} key={movie.id}>
-                    <MovieCard
-                      movie={movie}
-                      imageMaxWidth={119}
-                      clickMovieByStar={() => setClickedMovie(movie)}
-                    />
+                    <MovieCard movie={movie} imageMaxWidth={119} />
                   </Grid.Col>
                 ))}
               </Grid>
@@ -126,7 +107,6 @@ export default function Home() {
           )}
         </Stack>
       </main>
-      <RatingModal isOpen={isOpen} toggle={toggle} movie={clickedMovie} />
-    </Flex>
+    </LayoutWSidebar>
   );
 }

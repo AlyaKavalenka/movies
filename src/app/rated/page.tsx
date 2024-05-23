@@ -1,14 +1,10 @@
 'use client';
 
-import RatingModal from '@/components/modal/ratingModal';
 import MovieCard from '@/components/movieCard/movieCard';
-import Sidebar from '@/components/sidebar/sidebar';
 import { useAppSelector } from '@/lib/hooks/storeHooks';
-import useModal from '@/lib/hooks/useModal';
-import { Movie } from '@/types/interfaces';
 import { Flex, Grid, Pagination, Stack, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import useLocalStorage from '@/lib/hooks/useLocalStorage';
+import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
 import Search from '@/components/inputs/search';
 import { usePathname, useRouter } from 'next/navigation';
 import NoRated from '@/components/noRated/noRated';
@@ -30,16 +26,6 @@ export default function RatedPage({
   const limit = 4;
 
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
-
-  const isOpen = useAppSelector((state) => state.isOpenModalSlice.value);
-  const { toggle } = useModal();
-  const [clickedMovie, setClickedMovie] = useState<Movie>();
-  const { synchronize } = useLocalStorage([]);
-
-  useEffect(() => {
-    synchronize();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const [filteredMovies, setFilteredMovies] = useState(ratedMovies);
   const [totalPages, setTotalPages] = useState(1);
@@ -79,8 +65,7 @@ export default function RatedPage({
   };
 
   return (
-    <Flex mih="100vh">
-      <Sidebar />
+    <LayoutWSidebar>
       <main className={styles.main}>
         {ratedMovies.length ? (
           <>
@@ -95,11 +80,7 @@ export default function RatedPage({
                 {[...filteredMovies.slice(startIndex, endIndex)].map(
                   (movie) => (
                     <Grid.Col span={1} key={movie.id}>
-                      <MovieCard
-                        movie={movie}
-                        imageMaxWidth={119}
-                        clickMovieByStar={() => setClickedMovie(movie)}
-                      />
+                      <MovieCard movie={movie} imageMaxWidth={119} />
                     </Grid.Col>
                   ),
                 )}
@@ -122,7 +103,6 @@ export default function RatedPage({
           <NoRated />
         )}
       </main>
-      <RatingModal isOpen={isOpen} toggle={toggle} movie={clickedMovie} />
-    </Flex>
+    </LayoutWSidebar>
   );
 }

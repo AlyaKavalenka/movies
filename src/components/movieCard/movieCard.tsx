@@ -21,11 +21,10 @@ import MovieCardTable from './movieCardTable';
 interface MovieCardProps {
   movie: Movie;
   imageMaxWidth: number;
-  clickMovieByStar?: () => void;
 }
 
 export default function MovieCard(props: MovieCardProps) {
-  const { movie, imageMaxWidth, clickMovieByStar } = props;
+  const { movie, imageMaxWidth } = props;
   const {
     title,
     poster_path,
@@ -58,7 +57,7 @@ export default function MovieCard(props: MovieCardProps) {
     genresTitles = genres.map((genre) => genre.name);
   }
 
-  const { toggle } = useModal();
+  const { toggle, setMovie } = useModal();
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
   const foundInRated = ratedMovies.find(
     (ratedMovie) => ratedMovie.id === movie.id,
@@ -131,7 +130,7 @@ export default function MovieCard(props: MovieCardProps) {
                       variant="transparent"
                       onClick={(e) => {
                         e.preventDefault();
-                        if (clickMovieByStar) clickMovieByStar();
+                        setMovie(movie);
                         toggle();
                       }}
                     >

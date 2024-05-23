@@ -6,15 +6,19 @@ import {
   addRatedMovie,
   removeRatedMovie,
 } from '@/lib/reducers/ratedMoviesSlice';
+import useModal from '@/lib/hooks/useModal';
 import BtnWithoutBg from '../btns/btnWithoutBg';
 import styles from './modal.module.scss';
 import BtnPrimaryM from '../btns/btnPrimaryM';
 
 export default function RatingModal(props: ModalProps) {
-  const { isOpen, toggle, movie } = props;
+  const { isOpen, toggle } = props;
+
+  const { setMovie } = useModal();
 
   const dispatch = useAppDispatch();
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
+  const movie = useAppSelector((state) => state.isOpenModalSlice.clickedMovie);
 
   const foundInRatedMovies = ratedMovies.find(
     (ratedMovie) => ratedMovie.id === movie?.id,
@@ -31,7 +35,10 @@ export default function RatingModal(props: ModalProps) {
   return (
     <Modal
       opened={isOpen}
-      onClose={toggle}
+      onClose={() => {
+        setMovie(null);
+        toggle();
+      }}
       centered
       title="Your rating"
       radius={8}
