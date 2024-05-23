@@ -2,7 +2,6 @@
 
 import { Flex, Group, Pagination, Stack, Title } from '@mantine/core';
 import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
-import MovieCard from '@/components/movieCard/movieCard';
 import Genres from '@/components/inputs/genres';
 import ReleaseYear from '@/components/inputs/releaseYear';
 import Ratings from '@/components/inputs/ratings';
@@ -15,6 +14,7 @@ import { setPage } from '@/lib/reducers/moviesFiltersSlice';
 import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
 import NoFoundMovies from '@/components/noFoundMovies/noFoundMovies';
 import CustomLoader from '@/components/customLoader/customLoader';
+import MoviesCards from '@/components/movieCard/moviesCards';
 import styles from './page.module.scss';
 
 export default function Home() {
@@ -82,13 +82,7 @@ export default function Home() {
             <CustomLoader />
           ) : data?.results.length ? (
             <Group justify="flex-end">
-              <div className={styles.cards}>
-                {data?.results.map((movie) => (
-                  <div key={movie.id}>
-                    <MovieCard movie={movie} imageMaxWidth={119} />
-                  </div>
-                ))}
-              </div>
+              <MoviesCards movies={data.results} />
               <Pagination
                 total={data?.total_pages || 1}
                 color="purple.5"

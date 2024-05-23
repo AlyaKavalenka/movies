@@ -1,6 +1,5 @@
 'use client';
 
-import MovieCard from '@/components/movieCard/movieCard';
 import { useAppSelector } from '@/lib/hooks/storeHooks';
 import { Flex, Pagination, Stack, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
@@ -8,6 +7,7 @@ import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
 import Search from '@/components/inputs/search';
 import { usePathname, useRouter } from 'next/navigation';
 import NoRated from '@/components/noRated/noRated';
+import MoviesCards from '@/components/movieCard/moviesCards';
 import styles from './ratedPage.module.scss';
 
 export default function RatedPage({
@@ -76,15 +76,9 @@ export default function RatedPage({
               <Search flex="1 1 0" maw={490} />
             </Flex>
             <Stack gap={24} w="100%">
-              <div className={styles.cards}>
-                {[...filteredMovies.slice(startIndex, endIndex)].map(
-                  (movie) => (
-                    <div key={movie.id}>
-                      <MovieCard movie={movie} imageMaxWidth={119} />
-                    </div>
-                  ),
-                )}
-              </div>
+              <MoviesCards
+                movies={[...filteredMovies.slice(startIndex, endIndex)]}
+              />
               <Pagination
                 boundaries={0}
                 total={totalPages}

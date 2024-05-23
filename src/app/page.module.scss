@@ -3,13 +3,3 @@
   padding: min(.8rem, 40px) min(6.25vw, 90px);
   gap: min(.5rem, 40px);
 }
-
-.cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.11vw;
-
-  @include smaller-than($mantine-breakpoint-xs) {
-    grid-template-columns: 1fr;
-  }
-}
