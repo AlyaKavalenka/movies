@@ -1,7 +1,11 @@
 .main {
   justify-content: flex-start;
   align-items: flex-start;
-  padding: rem(40px) rem(90px);
-  gap: rem(40px);
+  padding: min(.8rem, 40px) min(6.25vw, 90px);
+  gap: min(.5rem, 40px);
   height: inherit;
+
+  @include smaller-than($mantine-breakpoint-sm) {
+    gap: .5rem;
+  }
 }
