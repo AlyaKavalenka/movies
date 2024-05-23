@@ -1,0 +1,12 @@
+.content {
+  max-width: 380px;
+}
+
+.ratings {
+  justify-content: space-between;
+  width: 100%;
+
+  @include smaller-than($mantine-breakpoint-xs) {
+    --rating-size: 24px !important;
+  }
+}

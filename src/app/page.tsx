@@ -1,95 +1,112 @@
-import Image from 'next/image';
-import styles from './page.module.css';
+'use client';
+
+import { Flex, Group, Pagination, Stack, Title } from '@mantine/core';
+import { useGetMoviesQuery } from '@/lib/api/endpoints/discover/movies';
+import MovieCard from '@/components/movieCard/movieCard';
+import Genres from '@/components/inputs/genres';
+import ReleaseYear from '@/components/inputs/releaseYear';
+import Ratings from '@/components/inputs/ratings';
+import SortBy from '@/components/inputs/sortBy';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks/storeHooks';
+import { useForm } from '@mantine/form';
+import BtnWithoutBg from '@/components/btns/btnWithoutBg';
+import { useEffect, useState } from 'react';
+import { setPage } from '@/lib/reducers/moviesFiltersSlice';
+import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
+import NoFoundMovies from '@/components/noFoundMovies/noFoundMovies';
+import CustomLoader from '@/components/customLoader/customLoader';
+import styles from './page.module.scss';
 
 export default function Home() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      genres: undefined,
+      releaseYear: null,
+      voteAverage: {
+        gte: undefined,
+        lte: undefined,
+      },
+    },
+  });
+
+  const moviesFilters = useAppSelector((state) => state.moviesFiltersSlice);
+  const { data, error, isLoading } = useGetMoviesQuery({
+    sortBy: moviesFilters.sortBy,
+    with_genres: moviesFilters.genresFilter,
+    primary_release_year: moviesFilters.releaseYearFilter,
+    vote_average: moviesFilters.voteAverage,
+    page: moviesFilters.page,
+  });
+
+  const dispatch = useAppDispatch();
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    const { genresFilter, releaseYearFilter, voteAverage } = moviesFilters;
+
+    setIsDisabled(
+      !(
+        genresFilter ||
+        releaseYearFilter ||
+        voteAverage.gte ||
+        voteAverage.lte
+      ),
+    );
+  }, [moviesFilters]);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <LayoutWSidebar>
+      <main className={styles.main}>
+        <Title order={1} size={32}>
+          Movies
+        </Title>
+        <Stack w="100%">
+          <Flex align="flex-end" gap={16} wrap="wrap">
+            <Genres key={form.key('genres')} />
+            <ReleaseYear key={form.key('releaseYear')} />
+            <Ratings key={form.key('voteAverage')} />
+            <BtnWithoutBg
+              handleClick={() => form.reset()}
+              label="Reset filters"
+              isDisabled={isDisabled}
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          </Flex>
+          <Flex justify="flex-end">
+            <SortBy />
+          </Flex>
+          {error ? (
+            <>Oh no, there was an error</>
+          ) : isLoading ? (
+            <CustomLoader />
+          ) : data?.results.length ? (
+            <Group justify="flex-end">
+              <div className={styles.cards}>
+                {data?.results.map((movie) => (
+                  <div key={movie.id}>
+                    <MovieCard movie={movie} imageMaxWidth={119} />
+                  </div>
+                ))}
+              </div>
+              <Pagination
+                total={data?.total_pages || 1}
+                color="purple.5"
+                value={data?.page}
+                onChange={(value) => dispatch(setPage(value))}
+                boundaries={0}
+                styles={{
+                  dots: {
+                    display: 'none',
+                  },
+                }}
+              />
+            </Group>
+          ) : (
+            <NoFoundMovies />
+          )}
+        </Stack>
+      </main>
+    </LayoutWSidebar>
   );
 }
