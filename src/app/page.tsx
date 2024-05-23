@@ -73,9 +73,11 @@ export default function Home() {
               isDisabled={isDisabled}
             />
           </Flex>
+
           <Flex justify="flex-end">
             <SortBy />
           </Flex>
+
           {error ? (
             <>Oh no, there was an error</>
           ) : isLoading ? (

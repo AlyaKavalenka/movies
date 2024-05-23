@@ -20,10 +20,10 @@ export default function RatedPage({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  const limit = 4;
+
   const pathname = usePathname();
   const { replace } = useRouter();
-
-  const limit = 4;
 
   const ratedMovies = useAppSelector((state) => state.ratedMoviesSlice.movies);
 
@@ -54,11 +54,12 @@ export default function RatedPage({
 
   useEffect(() => {
     const newStartIndex = (currentPage - 1) * limit;
+
     setStartIndex(newStartIndex);
     setEndIndex(newStartIndex + limit);
   }, [currentPage]);
 
-  const createPageURL = (pageNumber: number | string) => {
+  const setPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
     replace(`${pathname}?${params.toString()}`);
@@ -75,6 +76,7 @@ export default function RatedPage({
               </Title>
               <Search flex="1 1 0" maw={490} />
             </Flex>
+
             <Stack gap={24} w="100%">
               <MoviesCards
                 movies={[...filteredMovies.slice(startIndex, endIndex)]}
@@ -83,7 +85,7 @@ export default function RatedPage({
                 boundaries={0}
                 total={totalPages}
                 color="purple.5"
-                onChange={createPageURL}
+                onChange={setPageURL}
                 styles={{
                   dots: {
                     display: 'none',
