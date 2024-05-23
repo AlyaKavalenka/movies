@@ -3,7 +3,7 @@
 import MovieCard from '@/components/movieCard/movieCard';
 import Sidebar from '@/components/sidebar/sidebar';
 import { useGetMovieQuery } from '@/lib/api/endpoints/discover/movies';
-import { Anchor, Breadcrumbs, Flex, Stack } from '@mantine/core';
+import { Anchor, Breadcrumbs, Flex, Stack, Text } from '@mantine/core';
 import MovieCardDescription from '@/components/movieCard/movieCardDesciption';
 import { useAppSelector } from '@/lib/hooks/storeHooks';
 import useModal from '@/lib/hooks/useModal';
@@ -11,6 +11,7 @@ import RatingModal from '@/components/modal/ratingModal';
 import { useEffect } from 'react';
 import useLocalStorage from '@/lib/hooks/useLocalStorage';
 import CustomLoader from '@/components/customLoader/customLoader';
+import { notFound } from 'next/navigation';
 import styles from './moviePage.module.scss';
 
 export default function MoviePage({
@@ -40,12 +41,22 @@ export default function MoviePage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const ErrorView = () => {
+    if (error) {
+      if ('status' in error) {
+        if (error.status === 404) notFound();
+      }
+    }
+
+    return <Text>Oh no, there was an error</Text>;
+  };
+
   return (
     <Flex mih="100vh">
       <Sidebar />
       <main className={styles.main}>
         {error ? (
-          <>Oh no, there was an error</>
+          <>{ErrorView()}</>
         ) : isLoading ? (
           <CustomLoader />
         ) : (
