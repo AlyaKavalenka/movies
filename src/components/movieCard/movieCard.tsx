@@ -18,7 +18,7 @@ interface MovieCardProps {
 export default function MovieCard(props: MovieCardProps) {
   const { movie, imageMaxWidth } = props;
   const {
-    title,
+    original_title,
     poster_path,
     release_date,
     vote_average,
@@ -95,7 +95,7 @@ export default function MovieCard(props: MovieCardProps) {
             <Flex justify="space-between" align="flex-start">
               <div className={styles.cardInfo__top}>
                 <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
-                  {title}
+                  {original_title}
                 </Title>
 
                 {release_date && (

@@ -39,7 +39,7 @@ export default function RatedPage({
       filterResult = ratedMovies.filter((movie) => {
         const regexp = new RegExp(query, 'i');
 
-        return regexp.test(movie.title);
+        return regexp.test(movie.original_title);
       });
     } else {
       filterResult = ratedMovies;
