@@ -19,6 +19,7 @@ export default function NoRated() {
         w="auto"
         src={emptyImg}
         alt="No rated films"
+        miw={300}
       />
       <Stack align="center">
         <Text fz="20" fw={600}>
