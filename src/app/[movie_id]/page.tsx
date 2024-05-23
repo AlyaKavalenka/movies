@@ -45,7 +45,9 @@ export default function MoviePage({
           <CustomLoader />
         ) : (
           <Stack>
-            <Breadcrumbs>{breadcrumbsItems}</Breadcrumbs>
+            <Breadcrumbs classNames={{ root: styles.breadcrumbs }}>
+              {breadcrumbsItems}
+            </Breadcrumbs>
             {data ? <MovieCard movie={data} imageMaxWidth={250} /> : ''}
             <MovieCardDescription
               video={data?.videos?.results[0]}

@@ -1,6 +1,22 @@
 .main {
-  padding: rem(40) 15.517vw;
+  padding: max(.8rem, 40px) min(15.517vw, 180px);
   gap: rem(20);
   align-items: flex-start;
   height: inherit;
+
+  @include smaller-than($mantine-breakpoint-lg) {
+    padding: 1rem min(4vw, 180px);
+  }
+
+  @include smaller-than($mantine-breakpoint-md) {
+    padding: 1rem min(8vw, 180px);
+  }
+
+  @include smaller-than($mantine-breakpoint-sm) {
+    padding: 1rem min(4vw, 180px);
+  }
+}
+
+.breadcrumbs {
+  flex-wrap: wrap;
 }
