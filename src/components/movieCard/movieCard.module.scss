@@ -1,3 +1,14 @@
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.11vw;
+  width: 100%;
+
+  @include smaller-than($mantine-breakpoint-xs) {
+    grid-template-columns: 1fr;
+  }
+}
+
 .card {
   padding: 1.66vw;
   height: 100%;

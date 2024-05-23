@@ -82,7 +82,7 @@ export default function MovieCard(props: MovieCardProps) {
                 loading="lazy"
                 priority={false}
                 placeholder="blur"
-                sizes="100vw"
+                sizes="17vw"
                 blurDataURL={poster_path}
                 className={styles.image}
               />
@@ -97,6 +97,7 @@ export default function MovieCard(props: MovieCardProps) {
                 <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
                   {title}
                 </Title>
+
                 {release_date && (
                   <>
                     {release_date?.length > 0 && (
@@ -106,11 +107,13 @@ export default function MovieCard(props: MovieCardProps) {
                     )}
                   </>
                 )}
+
                 <Flex gap="8px" align="center" wrap="wrap">
                   <Flex gap="4px" align="center" wrap="wrap">
                     <StarIcon color="yellow" />
                     <Text fw="600">{Math.round(vote_average * 10) / 10}</Text>
                   </Flex>
+
                   <Text c="gray.6">
                     (
                     {vote_count > 999
@@ -120,6 +123,7 @@ export default function MovieCard(props: MovieCardProps) {
                   </Text>
                 </Flex>
               </div>
+
               <Flex gap={4} align="center">
                 <ActionIcon
                   variant="transparent"
