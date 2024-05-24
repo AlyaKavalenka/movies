@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppSelector } from '@/lib/hooks/storeHooks';
-import { Flex, Pagination, Stack, Title } from '@mantine/core';
+import { Flex, Pagination, Stack, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import LayoutWSidebar from '@/components/layoutWSidebar/layoutWSidebar';
 import Search from '@/components/inputs/search';
@@ -71,9 +71,9 @@ export default function RatedPage({
         {ratedMovies.length ? (
           <>
             <Flex w="100%" justify="space-between" gap="xs" wrap="wrap">
-              <Title order={1} size={32}>
+              <Text fz={32} fw={700} lh="140%">
                 Rated movies
-              </Title>
+              </Text>
               <Search flex="1 1 0" maw={490} />
             </Flex>
 
