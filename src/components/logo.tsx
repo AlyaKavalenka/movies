@@ -18,6 +18,7 @@ export default function Logo() {
         c="purple.5"
         style={{ ...poppins.style, letterSpacing: '-0.02em' }}
         size="24px"
+        lh="36px"
       >
         ArrowFlicks
       </Title>

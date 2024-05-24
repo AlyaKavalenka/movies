@@ -2,6 +2,12 @@
   padding: min(.8rem, 40px) min(6.25vw, 90px);
   gap: 40px;
 
+  @include larger-than($mantine-breakpoint-xl) {
+    padding: 41.5px 90px;
+    padding-bottom: 82px;
+    gap: 40px;
+  }
+
   @include smaller-than($mantine-breakpoint-sm) {
     gap: 10px;
   }
