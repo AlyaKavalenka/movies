@@ -1,3 +1,4 @@
+import { usePathname } from 'next/navigation';
 import { ActionIcon, Flex, Image, Paper, Text, Title } from '@mantine/core';
 import NextImage from 'next/image';
 import { Movie } from '@/types/interfaces';
@@ -31,6 +32,8 @@ export default function MovieCard(props: MovieCardProps) {
     revenue,
   } = movie;
 
+  const pathname = usePathname();
+
   const { data, isLoading, error } = useGetGenresQuery(null);
 
   let genresTitles = [];
@@ -59,7 +62,7 @@ export default function MovieCard(props: MovieCardProps) {
     <Paper
       radius="12px"
       component={Link}
-      href={`/${id}`}
+      href={`/${pathname === '/' ? 'movies' : 'rated'}/${id}`}
       className={styles.card}
     >
       {error ? (

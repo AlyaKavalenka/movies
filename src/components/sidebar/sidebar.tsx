@@ -17,7 +17,7 @@ export default function Sidebar() {
           href="/"
           label="Movies"
           variant="filled"
-          active={pathname === '/'}
+          active={pathname.replace('/', '') === '' || /movies/.test(pathname)}
           className={sidebarStyles.root}
           component={Link}
         />
@@ -26,7 +26,7 @@ export default function Sidebar() {
           href="/rated"
           label="Rated movies"
           variant="filled"
-          active={pathname === '/rated'}
+          active={/rated/.test(pathname)}
           className={sidebarStyles.root}
           component={Link}
         />
