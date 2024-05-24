@@ -1,7 +1,13 @@
 'use client';
 
 import getTimeFromMins from '@/utils/getTimeFromMins';
-import { NumberFormatter, Table, TableTd, TableTr } from '@mantine/core';
+import {
+  NumberFormatter,
+  Table,
+  TableTbody,
+  TableTd,
+  TableTr,
+} from '@mantine/core';
 import { usePathname } from 'next/navigation';
 import styles from './movieCard.module.scss';
 
@@ -44,7 +50,7 @@ export default function MovieCardTable(props: MovieCardTableProps) {
     },
     {
       name: 'Genres',
-      value: genres ? (
+      value: genres?.length ? (
         <span className={styles.genresText}>{genres?.join(', ')}</span>
       ) : undefined,
     },
@@ -93,7 +99,7 @@ export default function MovieCardTable(props: MovieCardTableProps) {
 
   return (
     <Table withRowBorders={false} className={styles.table}>
-      {rows}
+      <TableTbody className={styles.table__body}>{rows}</TableTbody>
     </Table>
   );
 }

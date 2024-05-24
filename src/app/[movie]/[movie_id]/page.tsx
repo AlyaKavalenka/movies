@@ -12,13 +12,17 @@ import styles from './moviePage.module.scss';
 export default function MoviePage({
   params,
 }: {
-  params: { movie_id: number };
+  params: { movie_id: number; movie: string };
 }) {
   const { data, isLoading, error } = useGetMovieQuery({ id: params.movie_id });
 
-  // TODO: fix in case when clicked from rated
+  const prevPage = () =>
+    params.movie === 'movies'
+      ? { title: 'Movies', href: '/' }
+      : { title: 'Rated movies', href: '/rated' };
+
   const breadcrumbsItems = [
-    { title: 'Movies', href: '/' },
+    prevPage(),
     { title: data?.title, href: `/${params.movie_id}` },
   ].map((item, index) => (
     <Anchor href={item.href} key={index} fz={14} c="purple.5" lh="20px">
@@ -44,16 +48,22 @@ export default function MoviePage({
         ) : isLoading ? (
           <CustomLoader />
         ) : (
-          <Stack>
+          <Stack w="100%">
             <Breadcrumbs classNames={{ root: styles.breadcrumbs }}>
               {breadcrumbsItems}
             </Breadcrumbs>
             {data ? <MovieCard movie={data} imageMaxWidth={250} /> : ''}
-            <MovieCardDescription
-              video={data?.videos?.results[0]}
-              overview={data?.overview}
-              productionCompanies={data?.production_companies}
-            />
+            {data?.videos?.results.length ||
+            data?.overview ||
+            data?.production_companies?.length ? (
+              <MovieCardDescription
+                video={data?.videos?.results[0]}
+                overview={data?.overview}
+                productionCompanies={data?.production_companies}
+              />
+            ) : (
+              ''
+            )}
           </Stack>
         )}
       </main>

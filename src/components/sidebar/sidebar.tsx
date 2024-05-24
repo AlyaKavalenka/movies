@@ -10,15 +10,18 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <Flex bg="purple.1" p="lg" className={sidebarStyles.sidebar}>
+    <Flex bg="purple.1" className={sidebarStyles.sidebar}>
       <Logo />
       <Flex className={sidebarStyles.sidebar__links}>
         <NavLink
           href="/"
           label="Movies"
           variant="filled"
-          active={pathname === '/'}
-          className={sidebarStyles.root}
+          active={pathname.replace('/', '') === '' || /movies/.test(pathname)}
+          classNames={{
+            root: sidebarStyles.root,
+            label: sidebarStyles.label,
+          }}
           component={Link}
         />
 
@@ -26,8 +29,11 @@ export default function Sidebar() {
           href="/rated"
           label="Rated movies"
           variant="filled"
-          active={pathname === '/rated'}
-          className={sidebarStyles.root}
+          active={/rated/.test(pathname)}
+          classNames={{
+            root: sidebarStyles.root,
+            label: sidebarStyles.label,
+          }}
           component={Link}
         />
       </Flex>

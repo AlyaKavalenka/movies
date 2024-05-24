@@ -31,10 +31,11 @@ export default function Search(props: TextInputProps) {
       radius="md"
       size="md"
       placeholder="Search movie title"
-      rightSectionWidth={88}
+      rightSectionWidth={110}
       leftSection={
         <Image component={NextImage} src={searchIcon} alt="search" />
       }
+      miw={267}
       rightSection={
         <Button
           variant="filled"
@@ -43,6 +44,7 @@ export default function Search(props: TextInputProps) {
           fz={14}
           size="compact-md"
           classNames={{ root: styles.btn }}
+          px={20}
         >
           Search
         </Button>

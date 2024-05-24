@@ -37,6 +37,8 @@ export default function SortBy() {
       classNames={{
         input: styles.selectInput,
         option: styles.option,
+        label: styles.label,
+        root: styles.select,
       }}
       rightSection={
         <ArrowSvg

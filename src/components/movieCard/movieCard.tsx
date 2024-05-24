@@ -1,3 +1,4 @@
+import { usePathname } from 'next/navigation';
 import { ActionIcon, Flex, Image, Paper, Text, Title } from '@mantine/core';
 import NextImage from 'next/image';
 import { Movie } from '@/types/interfaces';
@@ -18,7 +19,7 @@ interface MovieCardProps {
 export default function MovieCard(props: MovieCardProps) {
   const { movie, imageMaxWidth } = props;
   const {
-    title,
+    original_title,
     poster_path,
     release_date,
     vote_average,
@@ -30,6 +31,8 @@ export default function MovieCard(props: MovieCardProps) {
     budget,
     revenue,
   } = movie;
+
+  const pathname = usePathname();
 
   const { data, isLoading, error } = useGetGenresQuery(null);
 
@@ -59,7 +62,7 @@ export default function MovieCard(props: MovieCardProps) {
     <Paper
       radius="12px"
       component={Link}
-      href={`/${id}`}
+      href={`/${pathname === '/' ? 'movies' : 'rated'}/${id}`}
       className={styles.card}
     >
       {error ? (
@@ -68,7 +71,7 @@ export default function MovieCard(props: MovieCardProps) {
         <>Loading...</>
       ) : (
         <div className={styles.card__wrapper}>
-          <div>
+          <>
             {poster_path ? (
               <Image
                 component={NextImage}
@@ -76,27 +79,26 @@ export default function MovieCard(props: MovieCardProps) {
                 alt="movie poster"
                 width={0}
                 height={0}
-                w="auto"
-                h="auto"
+                h="100%"
                 maw={imageMaxWidth}
-                loading="lazy"
                 priority={false}
                 placeholder="blur"
-                sizes="100vw"
+                sizes="auto"
                 blurDataURL={poster_path}
                 className={styles.image}
               />
             ) : (
               <NoPoster />
             )}
-          </div>
+          </>
 
           <section className={styles.cardInfo}>
             <Flex justify="space-between" align="flex-start">
               <div className={styles.cardInfo__top}>
                 <Title order={3} size="h4" fz="20px" fw="600" c="purple.5">
-                  {title}
+                  {original_title}
                 </Title>
+
                 {release_date && (
                   <>
                     {release_date?.length > 0 && (
@@ -106,20 +108,27 @@ export default function MovieCard(props: MovieCardProps) {
                     )}
                   </>
                 )}
-                <Flex gap="8px" align="center" wrap="wrap">
-                  <Flex gap="4px" align="center" wrap="wrap">
-                    <StarIcon color="yellow" />
-                    <Text fw="600">{Math.round(vote_average * 10) / 10}</Text>
+
+                {vote_count ? (
+                  <Flex gap="8px" align="center" wrap="wrap">
+                    <Flex gap="4px" align="center" wrap="wrap">
+                      <StarIcon color="yellow" />
+                      <Text fw="600">{Math.round(vote_average * 10) / 10}</Text>
+                    </Flex>
+
+                    <Text c="gray.6">
+                      (
+                      {vote_count > 999
+                        ? `${Math.round((vote_count * 10) / 1000) / 10}M`
+                        : vote_count}
+                      )
+                    </Text>
                   </Flex>
-                  <Text c="gray.6">
-                    (
-                    {vote_count > 999
-                      ? `${Math.round((vote_count * 10) / 1000) / 10}M`
-                      : vote_count}
-                    )
-                  </Text>
-                </Flex>
+                ) : (
+                  ''
+                )}
               </div>
+
               <Flex gap={4} align="center">
                 <ActionIcon
                   variant="transparent"

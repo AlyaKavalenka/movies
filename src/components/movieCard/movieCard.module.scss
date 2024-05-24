@@ -1,12 +1,23 @@
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: max(1.11vw, 12px);
+  width: 100%;
+
+  @include smaller-than($mantine-breakpoint-xs) {
+    grid-template-columns: 1fr;
+  }
+}
+
 .card {
-  padding: 1.66vw;
+  padding: max(1.66vw, 12px);
   height: 100%;
 
 
   &__wrapper {
     display: flex;
     flex-wrap: nowrap;
-    gap: 1.1111vw;
+    gap: max(1.1111vw, 6px);
     height: inherit;
 
     @include smaller-than($mantine-breakpoint-sm) {
@@ -15,6 +26,10 @@
   }
   
   .image {
+    min-width: 25%;
+
+    aspect-ratio: auto 119 / 170;
+
     @include smaller-than($mantine-breakpoint-sm) {
       width: 100%;
       max-width: 100% !important; 
@@ -37,11 +52,21 @@
   .table {
     width: 100%;
 
+    &__body {
+      width: 100%;
+    }
+
     &__rowName {
-      width: 40%;
+      width: 0;
+      white-space: nowrap;
+
+      @include smaller-than($mantine-breakpoint-sm) {
+        white-space: wrap;
+      }
     }
 
     &__rowValue {
+      width: 100%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

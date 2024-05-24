@@ -56,7 +56,10 @@ const movies = api.injectEndpoints({
           return company;
         }),
       }),
-      // TODO: add provided tags
+      providesTags: (result: Movie | undefined) => {
+        if (result) return [{ type: 'Movie', id: result.id }];
+        return [{ type: 'Movie' }];
+      },
     }),
   }),
   overrideExisting: false,

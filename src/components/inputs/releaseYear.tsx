@@ -28,6 +28,8 @@ export default function ReleaseYear() {
       classNames={{
         input: styles.selectInput,
         option: styles.option,
+        label: styles.label,
+        root: styles.select,
       }}
       searchable
       rightSection={
@@ -43,11 +45,12 @@ export default function ReleaseYear() {
           }}
         />
       }
+      size="auto"
       onDropdownOpen={() => setArrowState('up')}
       onDropdownClose={() => setArrowState('down')}
       onChange={setValue}
       maw={284}
-      miw={161}
+      miw={150}
       flex="1 0 0"
     />
   );
