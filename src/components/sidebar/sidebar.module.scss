@@ -1,18 +1,25 @@
 .root {
-  padding: rem(10px);
+  align-self: stretch;
+  padding: 10px;
 
-  font-weight: normal;
   line-height: 140%;
-  color: var(--mantine-color-black);
 
   border-radius: 8px;
 
-  &[data-active] {
-    font-weight: bold;
+  .label {
     font-size: rem(16px);
-    color: var(--mantine-color-purple-5);
+    font-weight: normal;
+    line-height: 140%;
+    color: var(--mantine-color-black);
+  }
 
+  &[data-active] {
     background-color: var(--mantine-color-purple-2);
+
+    .label {
+      font-weight: 700;
+      color: var(--mantine-color-purple-5);
+    }
   }
 
   &:hover {
@@ -29,6 +36,11 @@
 .sidebar {
   flex-direction: column;
   gap: 80px;
+
+  @include larger-than($mantine-breakpoint-xl) {
+    padding: 24px;
+    min-width: 280px;
+  }
 
   @include smaller-than($mantine-breakpoint-md) {
      flex-direction: row;

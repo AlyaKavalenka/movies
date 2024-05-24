@@ -2,4 +2,8 @@
   justify-content: flex-start;
   padding: min(.8rem, 40px) min(6.25vw, 90px);
   gap: min(.5rem, 40px);
+
+  @include larger-than($mantine-breakpoint-xl) {
+    padding: 40px 90px;
+  }
 }
