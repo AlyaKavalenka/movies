@@ -45,10 +45,12 @@ export default function ReleaseYear() {
           }}
         />
       }
+      size="auto"
       onDropdownOpen={() => setArrowState('up')}
       onDropdownClose={() => setArrowState('down')}
       onChange={setValue}
       maw={284}
+      miw={150}
       flex="1 0 0"
     />
   );

@@ -34,6 +34,7 @@ export default function Ratings() {
           label: styles.label,
           root: styles.NumberInput,
         }}
+        // h={69.7}
       />
       <NumberInput
         aria-label="Ratings"
@@ -47,6 +48,7 @@ export default function Ratings() {
           label: styles.label,
           root: styles.NumberInput,
         }}
+        // h={40}
       />
     </Flex>
   );

@@ -7,6 +7,8 @@
 .selectInput {
   padding: 8px 12px;
 
+  flex: 1;
+
   @include larger-than($mantine-breakpoint-xl) {
     min-width: 284px;
   }

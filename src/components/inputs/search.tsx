@@ -35,6 +35,7 @@ export default function Search(props: TextInputProps) {
       leftSection={
         <Image component={NextImage} src={searchIcon} alt="search" />
       }
+      miw={267}
       rightSection={
         <Button
           variant="filled"

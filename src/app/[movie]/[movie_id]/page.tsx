@@ -48,16 +48,22 @@ export default function MoviePage({
         ) : isLoading ? (
           <CustomLoader />
         ) : (
-          <Stack>
+          <Stack w="100%">
             <Breadcrumbs classNames={{ root: styles.breadcrumbs }}>
               {breadcrumbsItems}
             </Breadcrumbs>
             {data ? <MovieCard movie={data} imageMaxWidth={250} /> : ''}
-            <MovieCardDescription
-              video={data?.videos?.results[0]}
-              overview={data?.overview}
-              productionCompanies={data?.production_companies}
-            />
+            {data?.videos?.results.length ||
+            data?.overview ||
+            data?.production_companies?.length ? (
+              <MovieCardDescription
+                video={data?.videos?.results[0]}
+                overview={data?.overview}
+                productionCompanies={data?.production_companies}
+              />
+            ) : (
+              ''
+            )}
           </Stack>
         )}
       </main>

@@ -36,6 +36,7 @@
 .sidebar {
   flex-direction: column;
   gap: 80px;
+  padding: max(1.66vw, 12px);
 
   @include larger-than($mantine-breakpoint-xl) {
     padding: 24px;
