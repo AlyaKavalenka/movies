@@ -68,7 +68,7 @@ export default function MovieCard(props: MovieCardProps) {
         <>Loading...</>
       ) : (
         <div className={styles.card__wrapper}>
-          <div>
+          <>
             {poster_path ? (
               <Image
                 component={NextImage}
@@ -76,20 +76,18 @@ export default function MovieCard(props: MovieCardProps) {
                 alt="movie poster"
                 width={0}
                 height={0}
-                w="auto"
-                h="auto"
+                h="100%"
                 maw={imageMaxWidth}
-                loading="lazy"
                 priority={false}
                 placeholder="blur"
-                sizes="17vw"
+                sizes="auto"
                 blurDataURL={poster_path}
                 className={styles.image}
               />
             ) : (
               <NoPoster />
             )}
-          </div>
+          </>
 
           <section className={styles.cardInfo}>
             <Flex justify="space-between" align="flex-start">
@@ -108,20 +106,24 @@ export default function MovieCard(props: MovieCardProps) {
                   </>
                 )}
 
-                <Flex gap="8px" align="center" wrap="wrap">
-                  <Flex gap="4px" align="center" wrap="wrap">
-                    <StarIcon color="yellow" />
-                    <Text fw="600">{Math.round(vote_average * 10) / 10}</Text>
-                  </Flex>
+                {vote_count ? (
+                  <Flex gap="8px" align="center" wrap="wrap">
+                    <Flex gap="4px" align="center" wrap="wrap">
+                      <StarIcon color="yellow" />
+                      <Text fw="600">{Math.round(vote_average * 10) / 10}</Text>
+                    </Flex>
 
-                  <Text c="gray.6">
-                    (
-                    {vote_count > 999
-                      ? `${Math.round((vote_count * 10) / 1000) / 10}M`
-                      : vote_count}
-                    )
-                  </Text>
-                </Flex>
+                    <Text c="gray.6">
+                      (
+                      {vote_count > 999
+                        ? `${Math.round((vote_count * 10) / 1000) / 10}M`
+                        : vote_count}
+                      )
+                    </Text>
+                  </Flex>
+                ) : (
+                  ''
+                )}
               </div>
 
               <Flex gap={4} align="center">

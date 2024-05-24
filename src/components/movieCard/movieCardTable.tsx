@@ -50,7 +50,7 @@ export default function MovieCardTable(props: MovieCardTableProps) {
     },
     {
       name: 'Genres',
-      value: genres ? (
+      value: genres?.length ? (
         <span className={styles.genresText}>{genres?.join(', ')}</span>
       ) : undefined,
     },
@@ -99,7 +99,7 @@ export default function MovieCardTable(props: MovieCardTableProps) {
 
   return (
     <Table withRowBorders={false} className={styles.table}>
-      <TableTbody>{rows}</TableTbody>
+      <TableTbody className={styles.table__body}>{rows}</TableTbody>
     </Table>
   );
 }
