@@ -31,6 +31,8 @@ export default function Ratings() {
         classNames={{
           controls: styles.controls,
           input: styles.input,
+          label: styles.label,
+          root: styles.NumberInput,
         }}
       />
       <NumberInput
@@ -39,10 +41,11 @@ export default function Ratings() {
         onChange={(e) => setRatings({ ...ratings, lte: e })}
         min={ratings.gte ? +ratings.gte : 0}
         max={10}
-        miw={85}
         classNames={{
           controls: styles.controls,
           input: styles.input,
+          label: styles.label,
+          root: styles.NumberInput,
         }}
       />
     </Flex>

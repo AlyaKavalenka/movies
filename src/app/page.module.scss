@@ -4,6 +4,8 @@
   gap: min(.5rem, 40px);
 
   @include larger-than($mantine-breakpoint-xl) {
-    padding: 40px 90px;
+    padding: 41.5px 90px;
+    padding-bottom: 82px;
+    gap: 40px;
   }
 }

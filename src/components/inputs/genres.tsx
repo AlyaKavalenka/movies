@@ -44,6 +44,8 @@ export default function Genres() {
             input: styles.selectInput,
             pill: styles.pill,
             option: styles.option,
+            label: styles.label,
+            root: styles.select,
           }}
           styles={{
             inputField: {
